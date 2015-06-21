@@ -44,19 +44,19 @@ You write the json files in the following structure:
 ```json
 [
     {
-        "section": "1.0.0",
-        "elements": [
+        "name": "1.0.0",
+        "items": [
             {
                 "type": "F",
-                "text": "This is a new feature!"
+                "title": "This is a new feature!"
             },
             {
                 "type": "B",
-                "text": "This is a fixed bug!"
+                "title": "This is a fixed bug!"
             },
             {
                 "type": "I",
-                "text": "This is an improvement!"
+                "title": "This is an improvement!"
             }
         ]
     }
@@ -71,11 +71,11 @@ For example:
 ```json
 [
     {
-        "SECtion": "1.0.0",
-        "ELEMENTS": [
+        "NAMe": "1.0.0",
+        "ITEMS": [
             {
                 "TyPe": "F",
-                "tEXt": "This is a feature."
+                "tITLe": "This is a feature."
             }
         ]
     }
