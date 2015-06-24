@@ -46,4 +46,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
 }
 
+afterEvaluate {
+    tasks.getByName('packageReleaseResources') {
+        insertSourceMarkers = false
+    }
+}
+
 apply from: 'maven.gradle'
