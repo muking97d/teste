@@ -1,5 +1,14 @@
 [
     {
+        "name": "2.0.0",
+        "items": [
+            {
+                "type": "F",
+                "title": "Now <i>you</i> can use <b>HTML</b> tags in the <u>title</u>!"
+            }
+        ]
+    },
+    {
         "name": "1.0.1",
         "items": [
             {

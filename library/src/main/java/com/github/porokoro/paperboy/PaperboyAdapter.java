@@ -20,6 +20,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -227,7 +228,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             ViewHolderItemNone viewHolder = (ViewHolderItemNone) holder;
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
 
-            viewHolder.title.setText(data.getTitle());
+            viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
         else if (holder instanceof ViewHolderItemLabel) {
             ViewHolderItemLabel viewHolder = (ViewHolderItemLabel) holder;
@@ -254,7 +255,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
                     break;
             }
 
-            viewHolder.title.setText(data.getTitle());
+            viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
         else if (holder instanceof ViewHolderItemIcon) {
             ViewHolderItemIcon viewHolder = (ViewHolderItemIcon) holder;
@@ -275,7 +276,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
                     break;
             }
 
-            viewHolder.title.setText(data.getTitle());
+            viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
     }
 
