@@ -20,6 +20,9 @@ public class Themes {
     public static final int DARK  = 1;
     public static final int LIGHT = 2;
 
+    private Themes() {
+    }
+
     @Theme
     public static int fromValue(int value) {
         switch (value) {

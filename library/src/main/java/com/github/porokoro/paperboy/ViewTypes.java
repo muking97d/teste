@@ -21,6 +21,9 @@ public class ViewTypes {
     public static final int LABEL  = 3;
     public static final int HEADER = 4;
 
+    private ViewTypes() {
+    }
+
     @ViewType
     public static int fromValue(int value) {
         switch (value) {
