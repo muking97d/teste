@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId 'com.github.porokoro.paperboy.sample'
-        minSdkVersion 17
+        minSdkVersion 13
         targetSdkVersion 22
         versionCode versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"

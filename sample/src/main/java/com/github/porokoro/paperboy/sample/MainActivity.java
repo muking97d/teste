@@ -15,11 +15,11 @@
  */
 package com.github.porokoro.paperboy.sample;
 
-import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .setFile("paperboy/changelog.json")
                     .build();
 
-            getFragmentManager().beginTransaction()
-                                .add(R.id.content, fragment)
-                                .commit();
+            getSupportFragmentManager().beginTransaction()
+                                       .add(R.id.content, fragment)
+                                       .commit();
         }
     }
 
@@ -127,9 +127,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setSortItems(m_sort)
                 .build();
 
-        getFragmentManager().beginTransaction()
-                            .replace(R.id.content, fragment)
-                            .commit();
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(R.id.content, fragment)
+                                   .commit();
 
         m_drawerLayout.closeDrawer(m_drawerNavigation);
     }
