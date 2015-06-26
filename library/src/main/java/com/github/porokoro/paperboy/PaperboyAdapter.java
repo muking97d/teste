@@ -18,7 +18,6 @@ package com.github.porokoro.paperboy;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.util.SparseIntArray;
@@ -28,8 +27,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,12 +37,6 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 
 public class PaperboyAdapter extends Adapter<ViewHolder> {
-    private static final int ELEMENT_TYPE_SECTION_HEADER = 1;
-    private static final int ELEMENT_TYPE_TYPE_HEADER    = 2;
-    private static final int ELEMENT_TYPE_ITEM_NONE      = 3;
-    private static final int ELEMENT_TYPE_ITEM_LABEL     = 4;
-    private static final int ELEMENT_TYPE_ITEM_ICON      = 5;
-
     private static final int DEFAULT_COLOR = Color.BLACK;
 
     private final LayoutInflater m_inflater;
@@ -79,7 +70,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             }
 
             Element sectionElement = new Element();
-            sectionElement.type = ELEMENT_TYPE_SECTION_HEADER;
+            sectionElement.type = ElementTypes.SECTION_HEADER;
             sectionElement.data = section;
             m_dataset.add(sectionElement);
 
@@ -88,7 +79,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             for (PaperboyItem item : section.getItems()) {
                 if (item.getType() != prevItemType && m_viewType == ViewTypes.HEADER) {
                     Element typeElement = new Element();
-                    typeElement.type = ELEMENT_TYPE_TYPE_HEADER;
+                    typeElement.type = ElementTypes.TYPE_HEADER;
                     typeElement.data = item.getType();
                     m_dataset.add(typeElement);
 
@@ -154,15 +145,6 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         }
     }
 
-    @IntDef({ ELEMENT_TYPE_SECTION_HEADER,
-              ELEMENT_TYPE_TYPE_HEADER,
-              ELEMENT_TYPE_ITEM_NONE,
-              ELEMENT_TYPE_ITEM_LABEL,
-              ELEMENT_TYPE_ITEM_ICON })
-    @Retention(RetentionPolicy.SOURCE)
-    private @interface ElementType {
-    }
-
     private static class Element {
         @ElementType
         int type;
@@ -172,23 +154,23 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, @ElementType int viewType) {
         switch (viewType) {
-            case ELEMENT_TYPE_SECTION_HEADER: {
+            case ElementTypes.SECTION_HEADER: {
                 View rootView = m_inflater.inflate(R.layout.list_item_paperboy_section, parent, false);
                 return new ViewHolderSection(rootView);
             }
-            case ELEMENT_TYPE_TYPE_HEADER: {
+            case ElementTypes.TYPE_HEADER: {
                 View rootView = m_inflater.inflate(R.layout.list_item_paperboy_type, parent, false);
                 return new ViewHolderType(rootView);
             }
-            case ELEMENT_TYPE_ITEM_NONE: {
+            case ElementTypes.ITEM_NONE: {
                 View rootView = m_inflater.inflate(R.layout.list_item_paperboy_item_none, parent, false);
                 return new ViewHolderItemNone(rootView);
             }
-            case ELEMENT_TYPE_ITEM_LABEL: {
+            case ElementTypes.ITEM_LABEL: {
                 View rootView = m_inflater.inflate(R.layout.list_item_paperboy_item_label, parent, false);
                 return new ViewHolderItemLabel(rootView);
             }
-            case ELEMENT_TYPE_ITEM_ICON: {
+            case ElementTypes.ITEM_ICON: {
                 View rootView = m_inflater.inflate(R.layout.list_item_paperboy_item_icon, parent, false);
                 return new ViewHolderItemIcon(rootView);
             }
@@ -300,12 +282,12 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
     private int getElementType(@ViewType int type) {
         switch (type) {
             case ViewTypes.ICON:
-                return ELEMENT_TYPE_ITEM_ICON;
+                return ElementTypes.ITEM_ICON;
             case ViewTypes.LABEL:
-                return ELEMENT_TYPE_ITEM_LABEL;
+                return ElementTypes.ITEM_LABEL;
             case ViewTypes.NONE:
             default:
-                return ELEMENT_TYPE_ITEM_NONE;
+                return ElementTypes.ITEM_NONE;
         }
     }
 }
