@@ -5,6 +5,14 @@
             {
                 "type": "F",
                 "title": "Now <i>you</i> can use <b>HTML</b> tags in the <u>title</u>!"
+            },
+            {
+                "type": "C",
+                "title": "Custom view types are now avaiable as well."
+            },
+            {
+                "type": "NOT_FOUND",
+                "title": "This entry has no specific type because it is not defined."
             }
         ]
     },

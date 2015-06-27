@@ -18,9 +18,11 @@ package com.github.porokoro.paperboy;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Html;
-import android.util.SparseIntArray;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,23 +41,23 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
 public class PaperboyAdapter extends Adapter<ViewHolder> {
     private static final int DEFAULT_COLOR = Color.BLACK;
 
-    private final LayoutInflater m_inflater;
-    private final List<Element>  m_dataset;
-    private final SparseIntArray m_colors;
+    private final LayoutInflater                  m_inflater;
+    private final List<Element>                   m_dataset;
     @ViewType
-    private final int            m_viewType;
+    private final int                             m_viewType;
     @ElementType
-    private final int            m_elementType;
-    private final boolean        m_sortItems;
+    private final int                             m_elementType;
+    private final boolean                         m_sortItems;
+    private final SparseArray<ItemTypeDefinition> m_definitions;
 
-    public PaperboyAdapter(@NonNull Context context, @NonNull SparseIntArray colors,
-                           @ViewType int viewType, boolean sortItems) {
+    public PaperboyAdapter(@NonNull Context context,
+                           @ViewType int viewType, boolean sortItems, SparseArray<ItemTypeDefinition> definitions) {
         m_inflater = LayoutInflater.from(context);
         m_dataset = new ArrayList<>();
-        m_colors = colors;
         m_viewType = viewType;
         m_elementType = getElementType(viewType);
         m_sortItems = sortItems;
+        m_definitions = definitions;
     }
 
     public void setData(@NonNull List<PaperboySection> dataset) {
@@ -64,7 +66,10 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
                 Collections.sort(section.getItems(), new Comparator<PaperboyItem>() {
                     @Override
                     public int compare(@NonNull PaperboyItem lhs, @NonNull PaperboyItem rhs) {
-                        return lhs.getType() - rhs.getType();
+                        ItemTypeDefinition lhsDef = m_definitions.get(lhs.getType());
+                        ItemTypeDefinition rhsDef = m_definitions.get(rhs.getType());
+                        return (lhsDef != null ? lhsDef.getSortOrder() : Integer.MAX_VALUE) -
+                                (rhsDef != null ? rhsDef.getSortOrder() : Integer.MAX_VALUE);
                     }
                 });
             }
@@ -74,13 +79,13 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             sectionElement.data = section;
             m_dataset.add(sectionElement);
 
-            int prevItemType = ItemTypes.NONE;
+            int prevItemType = DefaultItemTypes.NONE;
 
             for (PaperboyItem item : section.getItems()) {
                 if (item.getType() != prevItemType && m_viewType == ViewTypes.HEADER) {
                     Element typeElement = new Element();
                     typeElement.type = ElementTypes.TYPE_HEADER;
-                    typeElement.data = item.getType();
+                    typeElement.data = m_definitions.get(item.getType());
                     m_dataset.add(typeElement);
 
                     prevItemType = item.getType();
@@ -189,21 +194,14 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         }
         else if (holder instanceof ViewHolderType) {
             ViewHolderType viewHolder = (ViewHolderType) holder;
-            @ItemType int data = (int) m_dataset.get(position).data;
+            ItemTypeDefinition data = (ItemTypeDefinition) m_dataset.get(position).data;
 
-            switch (data) {
-                case ItemTypes.FEATURE:
-                    viewHolder.name.setText(R.string.paperboy_item_type_features);
-                    viewHolder.name.setTextColor(getColor(data));
-                    break;
-                case ItemTypes.BUG:
-                    viewHolder.name.setText(R.string.paperboy_item_type_bugs);
-                    viewHolder.name.setTextColor(getColor(data));
-                    break;
-                case ItemTypes.IMPROVEMENT:
-                    viewHolder.name.setText(R.string.paperboy_item_type_improvements);
-                    viewHolder.name.setTextColor(getColor(data));
-                    break;
+            if (data == null)
+                viewHolder.name.setVisibility(View.GONE);
+            else {
+                viewHolder.name.setVisibility(View.VISIBLE);
+                viewHolder.name.setText(data.getTitlePlural());
+                viewHolder.name.setTextColor(data.getColor());
             }
         }
         else if (holder instanceof ViewHolderItemNone) {
@@ -215,26 +213,15 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         else if (holder instanceof ViewHolderItemLabel) {
             ViewHolderItemLabel viewHolder = (ViewHolderItemLabel) holder;
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
+            ItemTypeDefinition definition = m_definitions.get(data.getType());
 
-            switch (data.getType()) {
-                case ItemTypes.FEATURE:
-                    viewHolder.type.setText(R.string.paperboy_item_type_feature);
-                    viewHolder.type.setBackgroundResource(R.drawable.paperboy_label_background);
-                    viewHolder.type.getBackground().setColorFilter(getColor(data.getType()),
-                                                                   PorterDuff.Mode.SRC_ATOP);
-                    break;
-                case ItemTypes.BUG:
-                    viewHolder.type.setText(R.string.paperboy_item_type_bug);
-                    viewHolder.type.setBackgroundResource(R.drawable.paperboy_label_background);
-                    viewHolder.type.getBackground().setColorFilter(getColor(data.getType()),
-                                                                   PorterDuff.Mode.SRC_ATOP);
-                    break;
-                case ItemTypes.IMPROVEMENT:
-                    viewHolder.type.setText(R.string.paperboy_item_type_improvement);
-                    viewHolder.type.setBackgroundResource(R.drawable.paperboy_label_background);
-                    viewHolder.type.getBackground().setColorFilter(getColor(data.getType()),
-                                                                   PorterDuff.Mode.SRC_ATOP);
-                    break;
+            if (definition == null)
+                viewHolder.type.setVisibility(View.GONE);
+            else {
+                viewHolder.type.setVisibility(View.VISIBLE);
+                viewHolder.type.setText(definition.getTitleSingular());
+                viewHolder.type.setBackgroundResource(R.drawable.paperboy_label_background);
+                viewHolder.type.getBackground().setColorFilter(getColor(definition), PorterDuff.Mode.SRC_ATOP);
             }
 
             viewHolder.title.setText(Html.fromHtml(data.getTitle()));
@@ -242,20 +229,14 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         else if (holder instanceof ViewHolderItemIcon) {
             ViewHolderItemIcon viewHolder = (ViewHolderItemIcon) holder;
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
+            ItemTypeDefinition definition = m_definitions.get(data.getType());
 
-            switch (data.getType()) {
-                case ItemTypes.FEATURE:
-                    viewHolder.type.setImageResource(R.drawable.paperboy_ic_done);
-                    viewHolder.type.setColorFilter(getColor(data.getType()));
-                    break;
-                case ItemTypes.BUG:
-                    viewHolder.type.setImageResource(R.drawable.paperboy_ic_bug_report);
-                    viewHolder.type.setColorFilter(getColor(data.getType()));
-                    break;
-                case ItemTypes.IMPROVEMENT:
-                    viewHolder.type.setImageResource(R.drawable.paperboy_ic_trending_up);
-                    viewHolder.type.setColorFilter(getColor(data.getType()));
-                    break;
+            if (definition == null)
+                viewHolder.type.setVisibility(View.GONE);
+            else {
+                viewHolder.type.setVisibility(View.VISIBLE);
+                viewHolder.type.setImageResource(definition.getIcon());
+                viewHolder.type.setColorFilter(getColor(definition));
             }
 
             viewHolder.title.setText(Html.fromHtml(data.getTitle()));
@@ -272,8 +253,9 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         return m_dataset.size();
     }
 
-    private int getColor(@ItemType int type) {
-        int color = m_colors.get(type);
+    @ColorInt
+    private int getColor(@Nullable ItemTypeDefinition definition) {
+        int color = definition == null ? 0 : definition.getColor();
 
         return color == 0 ? DEFAULT_COLOR : color;
     }

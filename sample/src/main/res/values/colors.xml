@@ -16,16 +16,6 @@
   -->
 <resources>
 
-    <attr name="paperboyFragmentStyle" format="reference"/>
-
-    <declare-styleable name="PaperboyFragment">
-        <attr name="paperboyViewType" format="enum">
-            <enum name="none" value="1"/>
-            <enum name="icon" value="2"/>
-            <enum name="label" value="3"/>
-            <enum name="header" value="4"/>
-        </attr>
-        <attr name="paperboySortItems" format="boolean"/>
-    </declare-styleable>
+    <color name="item_type_custom">#ffca28</color>
 
 </resources>

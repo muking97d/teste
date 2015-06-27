@@ -19,6 +19,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.SparseArray;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,12 +29,15 @@ import java.util.Locale;
 
 class JsonDataLoader extends AsyncTask<String, Integer, List<PaperboySection>> {
 
-    private final Context  m_context;
-    private final Callback m_callback;
+    private final Context        m_context;
+    private final Callback       m_callback;
+    private final JsonDataReader m_reader;
 
-    public JsonDataLoader(@NonNull Context context, @NonNull Callback callback) {
+    public JsonDataLoader(@NonNull Context context, @NonNull SparseArray<ItemTypeDefinition> definitions,
+                          @NonNull Callback callback) {
         m_context = context.getApplicationContext();
         m_callback = callback;
+        m_reader = new JsonDataReader(definitions);
     }
 
     @NonNull
@@ -51,7 +55,7 @@ class JsonDataLoader extends AsyncTask<String, Integer, List<PaperboySection>> {
         if (input == null)
             return new ArrayList<>(0);
 
-        return JsonDataReader.read(input);
+        return m_reader.read(input);
     }
 
     @Override

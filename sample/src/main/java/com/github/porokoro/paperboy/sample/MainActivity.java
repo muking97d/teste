@@ -25,7 +25,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import com.github.porokoro.paperboy.*;
+import com.github.porokoro.paperboy.PaperboyFragmentBuilder;
+import com.github.porokoro.paperboy.ViewType;
+import com.github.porokoro.paperboy.ViewTypes;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @ViewType
     private int     m_viewType = ViewTypes.NONE;
-    @Theme
-    private int     m_theme    = Themes.LIGHT;
     private boolean m_sort     = false;
 
     @Override
@@ -59,9 +59,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         m_drawerNavigation.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            Fragment fragment = new PaperboyFragment.Builder(this)
-                    .setTheme(Themes.LIGHT)
-                    .setFile("paperboy/changelog.json")
+            Fragment fragment = new PaperboyFragmentBuilder(this)
+                    .withDefinition(1000, "Custom", "c")
+                    .setColorRes(R.color.item_type_custom)
+                    .setTitleSingular(R.string.item_type_custom)
+                    .setTitlePlural(R.string.item_type_customs)
+                    .setIcon(R.drawable.ic_build)
+                    .setSortOrder(0)
+                    .add()
                     .build();
 
             getSupportFragmentManager().beginTransaction()
@@ -97,12 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.section_view_type_headers:
                 m_viewType = ViewTypes.HEADER;
                 break;
-            case R.id.section_theme_light:
-                m_theme = Themes.LIGHT;
-                break;
-            case R.id.section_theme_dark:
-                m_theme = Themes.DARK;
-                break;
             case R.id.section_sort_none:
                 m_sort = false;
                 break;
@@ -121,10 +120,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         item.setChecked(true);
 
-        Fragment fragment = new PaperboyFragment.Builder(this)
+        Fragment fragment = new PaperboyFragmentBuilder(this)
                 .setViewType(m_viewType)
-                .setTheme(m_theme)
                 .setSortItems(m_sort)
+                .withDefinition(1000, "Custom", "c")
+                .setColorRes(R.color.item_type_custom)
+                .setTitleSingular(R.string.item_type_custom)
+                .setTitlePlural(R.string.item_type_customs)
+                .setIcon(R.drawable.ic_build)
+                .setSortOrder(0)
+                .add()
                 .build();
 
         getSupportFragmentManager().beginTransaction()

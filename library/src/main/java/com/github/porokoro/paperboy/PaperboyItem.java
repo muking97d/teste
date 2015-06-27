@@ -18,23 +18,21 @@ package com.github.porokoro.paperboy;
 import android.support.annotation.NonNull;
 
 class PaperboyItem {
-    @ItemType
     private int    m_type;
     private String m_title;
     private String m_description;
 
     public PaperboyItem() {
-        m_type = ItemTypes.NONE;
+        m_type = DefaultItemTypes.NONE;
         m_title = "";
         m_description = "";
     }
 
-    @ItemType
     public int getType() {
         return m_type;
     }
 
-    public void setType(@ItemType int type) {
+    public void setType(int type) {
         m_type = type;
     }
 

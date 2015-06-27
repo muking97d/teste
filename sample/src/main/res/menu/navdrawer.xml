@@ -46,25 +46,6 @@
     </group>
 
     <item
-            android:title="@string/group_themes"
-            android:enabled="false"/>
-
-    <group
-            android:id="@+id/group_themes"
-            android:checkableBehavior="single">
-
-        <item
-                android:id="@+id/section_theme_light"
-                android:title="@string/section_theme_light"
-                android:checked="true"/>
-
-        <item
-                android:id="@+id/section_theme_dark"
-                android:title="@string/section_theme_dark"/>
-
-    </group>
-
-    <item
             android:title="@string/group_sorting"
             android:enabled="false"/>
 
