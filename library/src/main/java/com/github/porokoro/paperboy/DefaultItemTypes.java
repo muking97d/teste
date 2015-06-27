@@ -31,7 +31,7 @@ class DefaultItemTypes {
         new ItemTypeBuilder(context, builder, FEATURE, "Feature", "F")
                 .setTitleSingular(R.string.paperboy_item_type_feature)
                 .setTitlePlural(R.string.paperboy_item_type_features)
-                .setColorRes(R.color.paperboy_light_item_type_feature)
+                .setColorRes(R.color.paperboy_item_type_feature)
                 .setIcon(R.drawable.paperboy_ic_done)
                 .add();
     }
@@ -40,7 +40,7 @@ class DefaultItemTypes {
         new ItemTypeBuilder(context, builder, BUG, "Bug", "B")
                 .setTitleSingular(R.string.paperboy_item_type_bug)
                 .setTitlePlural(R.string.paperboy_item_type_bugs)
-                .setColorRes(R.color.paperboy_light_item_type_bug)
+                .setColorRes(R.color.paperboy_item_type_bug)
                 .setIcon(R.drawable.paperboy_ic_bug_report)
                 .add();
     }
@@ -49,7 +49,7 @@ class DefaultItemTypes {
         new ItemTypeBuilder(context, builder, IMPROVEMENT, "Improvement", "I")
                 .setTitleSingular(R.string.paperboy_item_type_improvement)
                 .setTitlePlural(R.string.paperboy_item_type_improvements)
-                .setColorRes(R.color.paperboy_light_item_type_improvement)
+                .setColorRes(R.color.paperboy_item_type_improvement)
                 .setIcon(R.drawable.paperboy_ic_trending_up)
                 .add();
     }

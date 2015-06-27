@@ -58,7 +58,7 @@ public class PaperboyFragment extends Fragment implements JsonDataLoader.Callbac
         TypedArray a = activity.obtainStyledAttributes(attrs,
                                                        R.styleable.PaperboyFragment,
                                                        R.attr.paperboyFragmentStyle,
-                                                       R.style.Paperboy);
+                                                       0);
 
         a.recycle();
     }
