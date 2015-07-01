@@ -17,6 +17,7 @@ package com.github.porokoro.paperboy.sample;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -36,8 +37,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle m_drawerToggle;
 
     @ViewType
-    private int     m_viewType = ViewTypes.NONE;
-    private boolean m_sort     = false;
+    private int     m_viewType   = ViewTypes.NONE;
+    @LayoutRes
+    private int     m_viewLayout = 0;
+    private boolean m_sort       = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             Fragment fragment = new PaperboyFragmentBuilder(this)
+                    .setViewType(m_viewType)
+                    .setViewLayout(m_viewLayout)
                     .withDefinition(1000, "Custom", "c")
                     .setColorRes(R.color.item_type_custom)
                     .setTitleSingular(R.string.item_type_custom)
@@ -102,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.section_view_type_headers:
                 m_viewType = ViewTypes.HEADER;
                 break;
+            case R.id.section_custom_item_default:
+                m_viewLayout = 0;
+                break;
+            case R.id.section_custom_item_custom:
+                m_viewLayout = R.layout.view_item_custom;
+                break;
             case R.id.section_sort_none:
                 m_sort = false;
                 break;
@@ -122,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Fragment fragment = new PaperboyFragmentBuilder(this)
                 .setViewType(m_viewType)
+                .setViewLayout(m_viewLayout)
                 .setSortItems(m_sort)
                 .withDefinition(1000, "Custom", "c")
                 .setColorRes(R.color.item_type_custom)

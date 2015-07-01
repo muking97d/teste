@@ -46,6 +46,25 @@
     </group>
 
     <item
+            android:title="@string/group_custom_item"
+            android:enabled="false"/>
+
+    <group
+            android:id="@+id/group_custom_item"
+            android:checkableBehavior="single">
+
+        <item
+                android:id="@+id/section_custom_item_default"
+                android:title="@string/section_custom_item_default"
+                android:checked="true"/>
+
+        <item
+                android:id="@+id/section_custom_item_custom"
+                android:title="@string/section_custom_item_custom"/>
+
+    </group>
+
+    <item
             android:title="@string/group_sorting"
             android:enabled="false"/>
 

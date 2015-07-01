@@ -17,6 +17,7 @@ package com.github.porokoro.paperboy;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -42,6 +43,12 @@ public class PaperboyFragmentBuilder {
     @NonNull
     public PaperboyFragmentBuilder setViewType(@ViewType int viewType) {
         m_arguments.putInt(PaperboyFragment.ARG_VIEW_TYPE, viewType);
+        return this;
+    }
+
+    @NonNull
+    public PaperboyFragmentBuilder setViewLayout(@LayoutRes int viewLayout) {
+        m_arguments.putInt(PaperboyFragment.ARG_VIEW_LAYOUT, viewLayout);
         return this;
     }
 

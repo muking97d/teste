@@ -34,6 +34,7 @@ import java.util.List;
 public class PaperboyFragment extends Fragment implements JsonDataLoader.Callback {
     public static final String ARG_FILE        = "file";
     public static final String ARG_VIEW_TYPE   = "viewType";
+    public static final String ARG_VIEW_LAYOUT = "viewLayout";
     public static final String ARG_SORT_ITEMS  = "sortItems";
     public static final String ARG_DEFINITIONS = "definitions";
 
@@ -69,10 +70,12 @@ public class PaperboyFragment extends Fragment implements JsonDataLoader.Callbac
         Bundle arguments = getArguments();
         String file = null;
         SparseArray<ItemTypeDefinition> definitions = new SparseArray<>();
+        int viewLayout = 0;
 
         if (arguments != null) {
             file = arguments.getString(ARG_FILE);
             definitions = arguments.getSparseParcelableArray(ARG_DEFINITIONS);
+            viewLayout = arguments.getInt(ARG_VIEW_LAYOUT);
             m_viewType = ViewTypes.fromValue(arguments.getInt(ARG_VIEW_TYPE, DEFAULT_VIEW_TYPE));
             m_sortItems = arguments.getBoolean(ARG_SORT_ITEMS, DEFAULT_SORT_ITEMS);
         }
@@ -81,7 +84,7 @@ public class PaperboyFragment extends Fragment implements JsonDataLoader.Callbac
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        m_adapter = new PaperboyAdapter(getActivity(), m_viewType, m_sortItems, definitions);
+        m_adapter = new PaperboyAdapter(getActivity(), m_viewType, m_sortItems, definitions, viewLayout);
         recyclerView.setAdapter(m_adapter);
 
         loadData(file, definitions);

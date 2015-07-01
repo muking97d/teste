@@ -26,11 +26,17 @@
     <string name="section_icons">Icons</string>
     <string name="section_headers">Headers</string>
 
+    <string name="group_custom_item">Custom item</string>
+    <string name="section_custom_item_default">Default</string>
+    <string name="section_custom_item_custom">Custom</string>
+
     <string name="group_sorting">Sorting</string>
     <string name="section_sort_none">None</string>
     <string name="section_sort_items">Sort items</string>
 
     <string name="item_type_custom">Custom</string>
     <string name="item_type_customs">Custom ones</string>
+
+    <string name="item_custom_emoji">\u2605</string>
 
 </resources>
