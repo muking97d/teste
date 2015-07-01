@@ -134,13 +134,14 @@ class JsonDataReader {
                             item.setType(definition.getId());
                     }
                     else if (type == JsonToken.STRING) {
-                        String shorthand = toLowerCase(reader.nextString());
+                        String value = toLowerCase(reader.nextString());
                         ItemTypeDefinition definition = null;
                         ItemTypeDefinition def;
 
                         for (int i = 0; i < m_definitions.size(); i++) {
                             def = m_definitions.valueAt(i);
-                            if (toLowerCase(def.getShorthand()).equals(shorthand)) {
+                            if (toLowerCase(def.getShorthand()).equals(value) ||
+                                    toLowerCase(def.getName()).equals(value)) {
                                 definition = def;
                                 break;
                             }
