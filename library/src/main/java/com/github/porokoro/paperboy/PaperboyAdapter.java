@@ -112,7 +112,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderSection(@NonNull View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.txt_name);
+            name = (TextView) itemView.findViewById(R.id.name);
         }
     }
 
@@ -121,7 +121,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderType(@NonNull View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.txt_name);
+            name = (TextView) itemView.findViewById(R.id.name);
         }
     }
 
@@ -130,7 +130,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderItemNone(@NonNull View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.txt_title);
+            title = (TextView) itemView.findViewById(R.id.title);
         }
     }
 
@@ -140,8 +140,8 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderItemLabel(@NonNull View itemView) {
             super(itemView);
-            type = (TextView) itemView.findViewById(R.id.txt_type);
-            title = (TextView) itemView.findViewById(R.id.txt_title);
+            type = (TextView) itemView.findViewById(R.id.type);
+            title = (TextView) itemView.findViewById(R.id.title);
         }
     }
 
@@ -151,8 +151,8 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderItemIcon(@NonNull View itemView) {
             super(itemView);
-            type = (ImageView) itemView.findViewById(R.id.img_type);
-            title = (TextView) itemView.findViewById(R.id.txt_title);
+            type = (ImageView) itemView.findViewById(R.id.type);
+            title = (TextView) itemView.findViewById(R.id.title);
         }
     }
 
@@ -215,7 +215,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
 
             if (viewHolder.title == null)
-                Log.w(TAG, "View id 'R.id.txt_title' missing in custom layout");
+                Log.w(TAG, "View id 'R.id.title' missing in custom layout");
             else
                 viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
@@ -225,7 +225,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             ItemTypeDefinition definition = m_definitions.get(data.getType());
 
             if (viewHolder.type == null)
-                Log.w(TAG, "View id 'R.id.txt_type' missing in custom layout");
+                Log.w(TAG, "View id 'R.id.type' missing in custom layout");
             else {
                 if (definition == null)
                     viewHolder.type.setVisibility(View.GONE);
@@ -238,7 +238,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             }
 
             if (viewHolder.title == null)
-                Log.w(TAG, "View id 'R.id.txt_title' missing in custom layout");
+                Log.w(TAG, "View id 'R.id.title' missing in custom layout");
             else
                 viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
@@ -248,7 +248,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             ItemTypeDefinition definition = m_definitions.get(data.getType());
 
             if (viewHolder.type == null)
-                Log.w(TAG, "View id 'R.id.img_type' missing in custom layout");
+                Log.w(TAG, "View id 'R.id.type' missing in custom layout");
             else {
                 if (definition == null)
                     viewHolder.type.setVisibility(View.GONE);
@@ -260,7 +260,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             }
 
             if (viewHolder.title == null)
-                Log.w(TAG, "View id 'R.id.txt_title' missing in custom layout");
+                Log.w(TAG, "View id 'R.id.title' missing in custom layout");
             else
                 viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
