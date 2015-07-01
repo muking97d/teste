@@ -33,6 +33,7 @@ class DefaultItemTypes {
                 .setTitlePlural(R.string.paperboy_item_type_features)
                 .setColorRes(R.color.paperboy_item_type_feature)
                 .setIcon(R.drawable.paperboy_ic_done)
+                .setSortOrder(0)
                 .add();
     }
 
@@ -42,6 +43,7 @@ class DefaultItemTypes {
                 .setTitlePlural(R.string.paperboy_item_type_bugs)
                 .setColorRes(R.color.paperboy_item_type_bug)
                 .setIcon(R.drawable.paperboy_ic_bug_report)
+                .setSortOrder(1)
                 .add();
     }
 
@@ -51,6 +53,7 @@ class DefaultItemTypes {
                 .setTitlePlural(R.string.paperboy_item_type_improvements)
                 .setColorRes(R.color.paperboy_item_type_improvement)
                 .setIcon(R.drawable.paperboy_ic_trending_up)
+                .setSortOrder(2)
                 .add();
     }
 }
