@@ -16,7 +16,9 @@
 package com.github.porokoro.paperboy;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.JsonReader;
+import android.util.JsonToken;
 import android.util.JsonWriter;
 import android.util.SparseArray;
 
@@ -54,6 +56,7 @@ class ConfigurationSerializer {
             throws IOException {
         writer.beginObject()
               .name("file").value(config.getFile())
+              .name("fileRes").value(config.getFileRes())
               .name("viewType").value(config.getViewType())
               .name("sectionLayout").value(config.getSectionLayout())
               .name("typeLayout").value(config.getTypeLayout())
@@ -126,7 +129,10 @@ class ConfigurationSerializer {
         while (reader.hasNext()) {
             switch (reader.nextName()) {
                 case "file":
-                    config.setFile(reader.nextString());
+                    config.setFile(readStringOrNull(reader));
+                    break;
+                case "fileRes":
+                    config.setFileRes(reader.nextInt());
                     break;
                 case "viewType":
                     config.setViewType(ViewTypes.fromValue(reader.nextInt()));
@@ -227,5 +233,16 @@ class ConfigurationSerializer {
 
         reader.endObject();
         return itemType;
+    }
+
+    @Nullable
+    private static String readStringOrNull(@NonNull JsonReader reader) throws IOException {
+        JsonToken type = reader.peek();
+
+        if (type == JsonToken.STRING)
+            return reader.nextString();
+
+        reader.nextNull();
+        return null;
     }
 }

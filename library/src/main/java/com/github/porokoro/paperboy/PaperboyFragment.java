@@ -19,6 +19,8 @@ import android.app.Activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RawRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -68,13 +70,13 @@ public class PaperboyFragment extends Fragment implements JsonDataLoader.Callbac
         m_adapter = new PaperboyAdapter(getActivity(), config);
         recyclerView.setAdapter(m_adapter);
 
-        loadData(config.getFile(), config.getItemTypes());
+        loadData(config.getFile(), config.getFileRes(), config.getItemTypes());
 
         return rootView;
     }
 
-    private void loadData(String file, SparseArray<ItemType> definitions) {
-        new JsonDataLoader(getActivity(), definitions, this).execute(file);
+    private void loadData(@Nullable String file, @RawRes int fileRes, @NonNull SparseArray<ItemType> definitions) {
+        new JsonDataLoader(getActivity(), file, fileRes, definitions, this).execute();
     }
 
     @Override

@@ -18,10 +18,12 @@ package com.github.porokoro.paperboy;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RawRes;
 import android.util.SparseArray;
 
 class PaperboyConfiguration {
     private String                m_file;
+    private int                   m_fileRes;
     private int                   m_viewType;
     private int                   m_sectionLayout;
     private int                   m_typeLayout;
@@ -44,6 +46,15 @@ class PaperboyConfiguration {
 
     public void setFile(@Nullable String file) {
         m_file = file;
+    }
+
+    @RawRes
+    public int getFileRes() {
+        return m_fileRes;
+    }
+
+    public void setFileRes(@RawRes int fileRes) {
+        m_fileRes = fileRes;
     }
 
     @ViewType

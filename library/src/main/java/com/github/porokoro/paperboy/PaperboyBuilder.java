@@ -17,10 +17,7 @@ package com.github.porokoro.paperboy;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+import android.support.annotation.*;
 
 public class PaperboyBuilder {
     private final Context               m_context;
@@ -34,6 +31,14 @@ public class PaperboyBuilder {
     @NonNull
     public PaperboyBuilder setFile(@Nullable String file) {
         m_configuration.setFile(file);
+        m_configuration.setFileRes(0);
+        return this;
+    }
+
+    @NonNull
+    public PaperboyBuilder setFileRes(@RawRes int fileRes) {
+        m_configuration.setFile(null);
+        m_configuration.setFileRes(fileRes);
         return this;
     }
 
