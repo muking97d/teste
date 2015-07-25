@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @ViewType
     private int     m_viewType   = ViewTypes.NONE;
     @LayoutRes
-    private int     m_viewLayout = 0;
+    private int     m_itemLayout = 0;
     private boolean m_sort       = false;
 
     @Override
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             Fragment fragment = new PaperboyFragmentBuilder(this)
                     .setViewType(m_viewType)
-                    .setViewLayout(m_viewLayout)
+                    .setItemLayout(m_itemLayout)
                     .withDefinition(1000, "Custom", "c")
                     .setColorRes(R.color.item_type_custom)
                     .setTitleSingular(R.string.item_type_custom)
@@ -108,10 +108,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 m_viewType = ViewTypes.HEADER;
                 break;
             case R.id.section_custom_item_default:
-                m_viewLayout = 0;
+                m_itemLayout = 0;
                 break;
             case R.id.section_custom_item_custom:
-                m_viewLayout = R.layout.view_item_custom;
+                m_itemLayout = R.layout.view_item_custom;
                 break;
             case R.id.section_sort_none:
                 m_sort = false;
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Fragment fragment = new PaperboyFragmentBuilder(this)
                 .setViewType(m_viewType)
-                .setViewLayout(m_viewLayout)
+                .setItemLayout(m_itemLayout)
                 .setSortItems(m_sort)
                 .withDefinition(1000, "Custom", "c")
                 .setColorRes(R.color.item_type_custom)

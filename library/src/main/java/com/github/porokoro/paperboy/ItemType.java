@@ -15,16 +15,14 @@
  */
 package com.github.porokoro.paperboy;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
-class ItemTypeDefinition implements Parcelable {
-    private final int    m_id;
-    private final String m_name;
-    private final String m_shorthand;
+class ItemType {
+    private int    m_id;
+    private String m_name;
+    private String m_shorthand;
     private       String m_titleSingular;
     private       String m_titlePlural;
     @ColorInt
@@ -33,7 +31,7 @@ class ItemTypeDefinition implements Parcelable {
     private       int    m_icon;
     private       int    m_sortOrder;
 
-    public ItemTypeDefinition(int id, @NonNull String name, @NonNull String shorthand) {
+    public ItemType(int id, @NonNull String name, @NonNull String shorthand) {
         m_id = id;
         m_name = name;
         m_shorthand = shorthand;
@@ -43,8 +41,25 @@ class ItemTypeDefinition implements Parcelable {
         m_sortOrder = Integer.MAX_VALUE;
     }
 
+    public ItemType() {
+        this(0, "", "");
+    }
+
     public int getId() {
         return m_id;
+    }
+
+    public void setId(int id) {
+        m_id = id;
+    }
+
+    @NonNull
+    public String getName() {
+        return m_name;
+    }
+
+    public void setName(@NonNull String name) {
+        m_name = name;
     }
 
     @NonNull
@@ -52,9 +67,8 @@ class ItemTypeDefinition implements Parcelable {
         return m_shorthand;
     }
 
-    @NonNull
-    public String getName() {
-        return m_name;
+    public void setShorthand(@NonNull String shorthand) {
+        m_shorthand = shorthand;
     }
 
     @NonNull
@@ -99,44 +113,5 @@ class ItemTypeDefinition implements Parcelable {
 
     public void setSortOrder(int sortOrder) {
         m_sortOrder = sortOrder;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel out, int flags) {
-        out.writeInt(m_id);
-        out.writeString(m_name);
-        out.writeString(m_shorthand);
-        out.writeString(m_titleSingular);
-        out.writeInt(m_color);
-        out.writeInt(m_icon);
-        out.writeInt(m_sortOrder);
-    }
-
-    public static final Parcelable.Creator<ItemTypeDefinition> CREATOR = new Parcelable.Creator<ItemTypeDefinition>() {
-        @Override
-        public ItemTypeDefinition createFromParcel(@NonNull Parcel in) {
-            return new ItemTypeDefinition(in);
-        }
-
-        @NonNull
-        @Override
-        public ItemTypeDefinition[] newArray(int size) {
-            return new ItemTypeDefinition[size];
-        }
-    };
-
-    private ItemTypeDefinition(Parcel in) {
-        m_id = in.readInt();
-        m_name = in.readString();
-        m_shorthand = in.readString();
-        m_titleSingular = in.readString();
-        m_color = in.readInt();
-        m_icon = in.readInt();
-        m_sortOrder = in.readInt();
     }
 }

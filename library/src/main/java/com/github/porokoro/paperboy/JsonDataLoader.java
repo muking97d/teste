@@ -33,7 +33,7 @@ class JsonDataLoader extends AsyncTask<String, Integer, List<PaperboySection>> {
     private final Callback       m_callback;
     private final JsonDataReader m_reader;
 
-    public JsonDataLoader(@NonNull Context context, @NonNull SparseArray<ItemTypeDefinition> definitions,
+    public JsonDataLoader(@NonNull Context context, @NonNull SparseArray<ItemType> definitions,
                           @NonNull Callback callback) {
         m_context = context.getApplicationContext();
         m_callback = callback;

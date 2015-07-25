@@ -24,7 +24,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,40 +39,31 @@ import static android.support.v7.widget.RecyclerView.Adapter;
 import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 
-public class PaperboyAdapter extends Adapter<ViewHolder> {
+class PaperboyAdapter extends Adapter<ViewHolder> {
     private static final int    DEFAULT_COLOR = Color.BLACK;
     private static final String TAG           = PaperboyAdapter.class.getSimpleName();
 
-    private final LayoutInflater                  m_inflater;
-    private final List<Element>                   m_dataset;
-    @ViewType
-    private final int                             m_viewType;
+    private final LayoutInflater        m_inflater;
+    private final List<Element>         m_dataset;
     @ElementType
-    private final int                             m_elementType;
-    private final boolean                         m_sortItems;
-    private final SparseArray<ItemTypeDefinition> m_definitions;
-    private final int m_viewLayout;
+    private final int                   m_elementType;
+    private final PaperboyConfiguration m_config;
 
-    public PaperboyAdapter(@NonNull Context context,
-                           @ViewType int viewType, boolean sortItems, SparseArray<ItemTypeDefinition> definitions,
-                           @LayoutRes int viewLayout) {
+    public PaperboyAdapter(@NonNull Context context, @NonNull PaperboyConfiguration config) {
         m_inflater = LayoutInflater.from(context);
         m_dataset = new ArrayList<>();
-        m_viewType = viewType;
-        m_elementType = getElementType(viewType);
-        m_sortItems = sortItems;
-        m_definitions = definitions;
-        m_viewLayout = viewLayout;
+        m_config = config;
+        m_elementType = getElementType(config.getViewType());
     }
 
     public void setData(@NonNull List<PaperboySection> dataset) {
         for (PaperboySection section : dataset) {
-            if (m_sortItems || m_viewType == ViewTypes.HEADER) {
+            if (m_config.isSortItems() || m_config.getViewType() == ViewTypes.HEADER) {
                 Collections.sort(section.getItems(), new Comparator<PaperboyItem>() {
                     @Override
                     public int compare(@NonNull PaperboyItem lhs, @NonNull PaperboyItem rhs) {
-                        ItemTypeDefinition lhsDef = m_definitions.get(lhs.getType());
-                        ItemTypeDefinition rhsDef = m_definitions.get(rhs.getType());
+                        ItemType lhsDef = m_config.getItemTypes().get(lhs.getType());
+                        ItemType rhsDef = m_config.getItemTypes().get(rhs.getType());
                         return (lhsDef != null ? lhsDef.getSortOrder() : Integer.MAX_VALUE) -
                                 (rhsDef != null ? rhsDef.getSortOrder() : Integer.MAX_VALUE);
                     }
@@ -88,10 +78,10 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             int prevItemType = DefaultItemTypes.NONE;
 
             for (PaperboyItem item : section.getItems()) {
-                if (item.getType() != prevItemType && m_viewType == ViewTypes.HEADER) {
+                if (item.getType() != prevItemType && m_config.getViewType() == ViewTypes.HEADER) {
                     Element typeElement = new Element();
                     typeElement.type = ElementTypes.TYPE_HEADER;
-                    typeElement.data = m_definitions.get(item.getType());
+                    typeElement.data = m_config.getItemTypes().get(item.getType());
                     m_dataset.add(typeElement);
 
                     prevItemType = item.getType();
@@ -200,7 +190,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         }
         else if (holder instanceof ViewHolderType) {
             ViewHolderType viewHolder = (ViewHolderType) holder;
-            ItemTypeDefinition data = (ItemTypeDefinition) m_dataset.get(position).data;
+            ItemType data = (ItemType) m_dataset.get(position).data;
 
             if (data == null)
                 viewHolder.name.setVisibility(View.GONE);
@@ -222,7 +212,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         else if (holder instanceof ViewHolderItemLabel) {
             ViewHolderItemLabel viewHolder = (ViewHolderItemLabel) holder;
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
-            ItemTypeDefinition definition = m_definitions.get(data.getType());
+            ItemType definition = m_config.getItemTypes().get(data.getType());
 
             if (viewHolder.type == null)
                 Log.w(TAG, "View id 'R.id.type' missing in custom layout");
@@ -245,7 +235,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         else if (holder instanceof ViewHolderItemIcon) {
             ViewHolderItemIcon viewHolder = (ViewHolderItemIcon) holder;
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
-            ItemTypeDefinition definition = m_definitions.get(data.getType());
+            ItemType definition = m_config.getItemTypes().get(data.getType());
 
             if (viewHolder.type == null)
                 Log.w(TAG, "View id 'R.id.type' missing in custom layout");
@@ -277,7 +267,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
     }
 
     @ColorInt
-    private int getColor(@Nullable ItemTypeDefinition definition) {
+    private int getColor(@Nullable ItemType definition) {
         int color = definition == null ? 0 : definition.getColor();
 
         return color == 0 ? DEFAULT_COLOR : color;
@@ -297,8 +287,8 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
     }
 
     private View inflateItemView(@LayoutRes int layoutRes, @NonNull ViewGroup parent) {
-        if (m_viewLayout != 0)
-            layoutRes = m_viewLayout;
+        if (m_config.getItemLayout() != 0)
+            layoutRes = m_config.getItemLayout();
 
         return m_inflater.inflate(layoutRes, parent, false);
     }

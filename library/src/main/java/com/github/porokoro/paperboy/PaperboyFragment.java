@@ -32,24 +32,11 @@ import java.util.List;
 
 
 public class PaperboyFragment extends Fragment implements JsonDataLoader.Callback {
-    public static final String ARG_FILE        = "file";
-    public static final String ARG_VIEW_TYPE   = "viewType";
-    public static final String ARG_VIEW_LAYOUT = "viewLayout";
-    public static final String ARG_SORT_ITEMS  = "sortItems";
-    public static final String ARG_DEFINITIONS = "definitions";
-
-    public static final int     DEFAULT_VIEW_TYPE  = ViewTypes.NONE;
-    public static final boolean DEFAULT_SORT_ITEMS = false;
-
-    @ViewType
-    private int     m_viewType;
-    private boolean m_sortItems;
+    public static final String ARG_CONFIG = "configuration";
 
     private PaperboyAdapter m_adapter;
 
     public PaperboyFragment() {
-        m_viewType = DEFAULT_VIEW_TYPE;
-        m_sortItems = DEFAULT_SORT_ITEMS;
     }
 
     @Override
@@ -68,31 +55,25 @@ public class PaperboyFragment extends Fragment implements JsonDataLoader.Callbac
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_paperboy, container, false);
         Bundle arguments = getArguments();
-        String file = null;
-        SparseArray<ItemTypeDefinition> definitions = new SparseArray<>();
-        int viewLayout = 0;
+        PaperboyConfiguration config = new PaperboyConfiguration();
 
         if (arguments != null) {
-            file = arguments.getString(ARG_FILE);
-            definitions = arguments.getSparseParcelableArray(ARG_DEFINITIONS);
-            viewLayout = arguments.getInt(ARG_VIEW_LAYOUT);
-            m_viewType = ViewTypes.fromValue(arguments.getInt(ARG_VIEW_TYPE, DEFAULT_VIEW_TYPE));
-            m_sortItems = arguments.getBoolean(ARG_SORT_ITEMS, DEFAULT_SORT_ITEMS);
+            config = ConfigurationSerializer.read(arguments.getString(ARG_CONFIG, ""));
         }
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        m_adapter = new PaperboyAdapter(getActivity(), m_viewType, m_sortItems, definitions, viewLayout);
+        m_adapter = new PaperboyAdapter(getActivity(), config);
         recyclerView.setAdapter(m_adapter);
 
-        loadData(file, definitions);
+        loadData(config.getFile(), config.getItemTypes());
 
         return rootView;
     }
 
-    private void loadData(String file, SparseArray<ItemTypeDefinition> definitions) {
+    private void loadData(String file, SparseArray<ItemType> definitions) {
         new JsonDataLoader(getActivity(), definitions, this).execute(file);
     }
 

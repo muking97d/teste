@@ -37,9 +37,9 @@ class JsonDataReader {
 
     private static final String FILE_ENCODING = "UTF-8";
 
-    private final SparseArray<ItemTypeDefinition> m_definitions;
+    private final SparseArray<ItemType> m_definitions;
 
-    public JsonDataReader(SparseArray<ItemTypeDefinition> definitions) {
+    public JsonDataReader(SparseArray<ItemType> definitions) {
         m_definitions = definitions;
     }
 
@@ -129,14 +129,14 @@ class JsonDataReader {
                     JsonToken type = reader.peek();
                     if (type == JsonToken.NUMBER) {
                         int id = reader.nextInt();
-                        ItemTypeDefinition definition = m_definitions.get(id);
+                        ItemType definition = m_definitions.get(id);
                         if (definition != null)
                             item.setType(definition.getId());
                     }
                     else if (type == JsonToken.STRING) {
                         String value = toLowerCase(reader.nextString());
-                        ItemTypeDefinition definition = null;
-                        ItemTypeDefinition def;
+                        ItemType definition = null;
+                        ItemType def;
 
                         for (int i = 0; i < m_definitions.size(); i++) {
                             def = m_definitions.valueAt(i);

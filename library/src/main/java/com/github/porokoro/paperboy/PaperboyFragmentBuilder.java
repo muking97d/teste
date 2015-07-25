@@ -21,40 +21,37 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.util.SparseArray;
 
 public class PaperboyFragmentBuilder {
-    private final Context                         m_context;
-    private final Bundle                          m_arguments;
-    private final SparseArray<ItemTypeDefinition> m_definitions;
+    private final Context               m_context;
+    private final PaperboyConfiguration m_configuration;
 
     public PaperboyFragmentBuilder(@NonNull Context context) {
         m_context = context;
-        m_arguments = new Bundle();
-        m_definitions = new SparseArray<>();
+        m_configuration = new PaperboyConfiguration();
     }
 
     @NonNull
     public PaperboyFragmentBuilder setFile(@Nullable String file) {
-        m_arguments.putString(PaperboyFragment.ARG_FILE, file);
+        m_configuration.setFile(file);
         return this;
     }
 
     @NonNull
     public PaperboyFragmentBuilder setViewType(@ViewType int viewType) {
-        m_arguments.putInt(PaperboyFragment.ARG_VIEW_TYPE, viewType);
+        m_configuration.setViewType(viewType);
         return this;
     }
 
     @NonNull
-    public PaperboyFragmentBuilder setViewLayout(@LayoutRes int viewLayout) {
-        m_arguments.putInt(PaperboyFragment.ARG_VIEW_LAYOUT, viewLayout);
+    public PaperboyFragmentBuilder setItemLayout(@LayoutRes int itemLayout) {
+        m_configuration.setItemLayout(itemLayout);
         return this;
     }
 
     @NonNull
     public PaperboyFragmentBuilder setSortItems(boolean sortItems) {
-        m_arguments.putBoolean(PaperboyFragment.ARG_SORT_ITEMS, sortItems);
+        m_configuration.setSortItems(sortItems);
         return this;
     }
 
@@ -72,20 +69,21 @@ public class PaperboyFragmentBuilder {
     public PaperboyFragment build() {
         PaperboyFragment fragment = new PaperboyFragment();
 
-        if (m_definitions.get(DefaultItemTypes.FEATURE) == null)
+        if (m_configuration.getItemTypes().get(DefaultItemTypes.FEATURE) == null)
             DefaultItemTypes.createFeature(m_context, this);
-        if (m_definitions.get(DefaultItemTypes.BUG) == null)
+        if (m_configuration.getItemTypes().get(DefaultItemTypes.BUG) == null)
             DefaultItemTypes.createBug(m_context, this);
-        if (m_definitions.get(DefaultItemTypes.IMPROVEMENT) == null)
+        if (m_configuration.getItemTypes().get(DefaultItemTypes.IMPROVEMENT) == null)
             DefaultItemTypes.createImprovement(m_context, this);
 
-        m_arguments.putSparseParcelableArray(PaperboyFragment.ARG_DEFINITIONS, m_definitions);
-        fragment.setArguments(m_arguments);
+        Bundle args = new Bundle(1);
+        args.putString(PaperboyFragment.ARG_CONFIG, ConfigurationSerializer.write(m_configuration));
+        fragment.setArguments(args);
 
         return fragment;
     }
 
-    void addDefinition(@NonNull ItemTypeDefinition definition) {
-        m_definitions.put(definition.getId(), definition);
+    void addDefinition(@NonNull ItemType definition) {
+        m_configuration.getItemTypes().put(definition.getId(), definition);
     }
 }
