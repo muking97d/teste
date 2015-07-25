@@ -23,6 +23,8 @@ import android.util.SparseArray;
 public class PaperboyConfiguration {
     private String                m_file;
     private int                   m_viewType;
+    private int m_sectionLayout;
+    private int m_typeLayout;
     private int                   m_itemLayout;
     private boolean               m_sortItems;
     private SparseArray<ItemType> m_itemTypes;
@@ -51,6 +53,24 @@ public class PaperboyConfiguration {
 
     public void setViewType(@ViewType int viewType) {
         m_viewType = viewType;
+    }
+
+    @LayoutRes
+    public int getSectionLayout() {
+        return m_sectionLayout;
+    }
+
+    public void setSectionLayout(@LayoutRes int sectionLayout) {
+        m_sectionLayout = sectionLayout;
+    }
+
+    @LayoutRes
+    public int getTypeLayout() {
+        return m_typeLayout;
+    }
+
+    public void setTypeLayout(@LayoutRes int typeLayout) {
+        m_typeLayout = typeLayout;
     }
 
     @LayoutRes

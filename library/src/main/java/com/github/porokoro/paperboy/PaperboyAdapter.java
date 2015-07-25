@@ -156,11 +156,19 @@ class PaperboyAdapter extends Adapter<ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, @ElementType int viewType) {
         switch (viewType) {
             case ElementTypes.SECTION_HEADER: {
-                View rootView = m_inflater.inflate(R.layout.list_item_paperboy_section, parent, false);
+                int sectionLayout = R.layout.list_item_paperboy_section;
+                if (m_config.getSectionLayout() != 0)
+                    sectionLayout = m_config.getSectionLayout();
+
+                View rootView = m_inflater.inflate(sectionLayout, parent, false);
                 return new ViewHolderSection(rootView);
             }
             case ElementTypes.TYPE_HEADER: {
-                View rootView = m_inflater.inflate(R.layout.list_item_paperboy_type, parent, false);
+                int typeLayout = R.layout.list_item_paperboy_type;
+                if (m_config.getTypeLayout() != 0)
+                    typeLayout = m_config.getTypeLayout();
+
+                View rootView = m_inflater.inflate(typeLayout, parent, false);
                 return new ViewHolderType(rootView);
             }
             case ElementTypes.ITEM_NONE: {
@@ -186,18 +194,25 @@ class PaperboyAdapter extends Adapter<ViewHolder> {
             ViewHolderSection viewHolder = (ViewHolderSection) holder;
             PaperboySection data = (PaperboySection) m_dataset.get(position).data;
 
-            viewHolder.name.setText(data.getName());
+            if (viewHolder.name == null)
+                Log.w(TAG, "View id 'R.id.name' missing in custom layout");
+            else
+                viewHolder.name.setText(data.getName());
         }
         else if (holder instanceof ViewHolderType) {
             ViewHolderType viewHolder = (ViewHolderType) holder;
             ItemType data = (ItemType) m_dataset.get(position).data;
 
-            if (data == null)
-                viewHolder.name.setVisibility(View.GONE);
+            if (viewHolder.name == null)
+                Log.w(TAG, "View id 'R.id.name' missing in custom layout");
             else {
-                viewHolder.name.setVisibility(View.VISIBLE);
-                viewHolder.name.setText(data.getTitlePlural());
-                viewHolder.name.setTextColor(data.getColor());
+                if (data == null)
+                    viewHolder.name.setVisibility(View.GONE);
+                else {
+                    viewHolder.name.setVisibility(View.VISIBLE);
+                    viewHolder.name.setText(data.getTitlePlural());
+                    viewHolder.name.setTextColor(data.getColor());
+                }
             }
         }
         else if (holder instanceof ViewHolderItemNone) {

@@ -37,10 +37,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle m_drawerToggle;
 
     @ViewType
-    private int     m_viewType   = ViewTypes.NONE;
+    private int     m_viewType      = ViewTypes.NONE;
     @LayoutRes
-    private int     m_itemLayout = 0;
-    private boolean m_sort       = false;
+    private int     m_sectionLayout = 0;
+    @LayoutRes
+    private int     m_typeLayout    = 0;
+    @LayoutRes
+    private int     m_itemLayout    = 0;
+    private boolean m_sort          = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             Fragment fragment = new PaperboyFragmentBuilder(this)
                     .setViewType(m_viewType)
+                    .setSectionLayout(m_sectionLayout)
+                    .setTypeLayout(m_typeLayout)
                     .setItemLayout(m_itemLayout)
                     .withDefinition(1000, "Custom", "c")
                     .setColorRes(R.color.item_type_custom)
@@ -107,6 +113,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.section_view_type_headers:
                 m_viewType = ViewTypes.HEADER;
                 break;
+            case R.id.section_custom_section_default:
+                m_sectionLayout = 0;
+                break;
+            case R.id.section_custom_section_custom:
+                m_sectionLayout = R.layout.view_section_custom;
+                break;
+            case R.id.section_custom_type_default:
+                m_typeLayout = 0;
+                break;
+            case R.id.section_custom_type_custom:
+                m_typeLayout = R.layout.view_type_custom;
+                break;
             case R.id.section_custom_item_default:
                 m_itemLayout = 0;
                 break;
@@ -133,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Fragment fragment = new PaperboyFragmentBuilder(this)
                 .setViewType(m_viewType)
+                .setSectionLayout(m_sectionLayout)
+                .setTypeLayout(m_typeLayout)
                 .setItemLayout(m_itemLayout)
                 .setSortItems(m_sort)
                 .withDefinition(1000, "Custom", "c")

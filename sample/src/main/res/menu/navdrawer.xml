@@ -46,6 +46,44 @@
     </group>
 
     <item
+            android:title="@string/group_custom_section"
+            android:enabled="false"/>
+
+    <group
+            android:id="@+id/group_custom_section"
+            android:checkableBehavior="single">
+
+        <item
+                android:id="@+id/section_custom_section_default"
+                android:title="@string/section_custom_section_default"
+                android:checked="true"/>
+
+        <item
+                android:id="@+id/section_custom_section_custom"
+                android:title="@string/section_custom_section_custom"/>
+
+    </group>
+
+    <item
+            android:title="@string/group_custom_type"
+            android:enabled="false"/>
+
+    <group
+            android:id="@+id/group_custom_type"
+            android:checkableBehavior="single">
+
+        <item
+                android:id="@+id/section_custom_type_default"
+                android:title="@string/section_custom_type_default"
+                android:checked="true"/>
+
+        <item
+                android:id="@+id/section_custom_type_custom"
+                android:title="@string/section_custom_type_custom"/>
+
+    </group>
+
+    <item
             android:title="@string/group_custom_item"
             android:enabled="false"/>
 

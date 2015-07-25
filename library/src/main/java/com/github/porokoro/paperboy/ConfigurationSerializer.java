@@ -55,6 +55,8 @@ class ConfigurationSerializer {
         writer.beginObject()
               .name("file").value(config.getFile())
               .name("viewType").value(config.getViewType())
+              .name("sectionLayout").value(config.getSectionLayout())
+              .name("typeLayout").value(config.getTypeLayout())
               .name("itemLayout").value(config.getItemLayout())
               .name("sortItems").value(config.isSortItems())
               .name("itemTypes");
@@ -128,6 +130,12 @@ class ConfigurationSerializer {
                     break;
                 case "viewType":
                     config.setViewType(ViewTypes.fromValue(reader.nextInt()));
+                    break;
+                case "sectionLayout":
+                    config.setSectionLayout(reader.nextInt());
+                    break;
+                case "typeLayout":
+                    config.setTypeLayout(reader.nextInt());
                     break;
                 case "itemLayout":
                     config.setItemLayout(reader.nextInt());

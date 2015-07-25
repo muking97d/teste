@@ -26,7 +26,15 @@
     <string name="section_icons">Icons</string>
     <string name="section_headers">Headers</string>
 
-    <string name="group_custom_item">Custom item</string>
+    <string name="group_custom_section">Custom section layout</string>
+    <string name="section_custom_section_default">Default</string>
+    <string name="section_custom_section_custom">Custom</string>
+
+    <string name="group_custom_type">Custom type layout</string>
+    <string name="section_custom_type_default">Default</string>
+    <string name="section_custom_type_custom">Custom</string>
+
+    <string name="group_custom_item">Custom item layout</string>
     <string name="section_custom_item_default">Default</string>
     <string name="section_custom_item_custom">Custom</string>
 

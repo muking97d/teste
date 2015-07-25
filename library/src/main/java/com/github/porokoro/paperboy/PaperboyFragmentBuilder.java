@@ -44,6 +44,18 @@ public class PaperboyFragmentBuilder {
     }
 
     @NonNull
+    public PaperboyFragmentBuilder setSectionLayout(@LayoutRes int sectionLayout) {
+        m_configuration.setSectionLayout(sectionLayout);
+        return this;
+    }
+
+    @NonNull
+    public PaperboyFragmentBuilder setTypeLayout(@LayoutRes int typeLayout) {
+        m_configuration.setTypeLayout(typeLayout);
+        return this;
+    }
+
+    @NonNull
     public PaperboyFragmentBuilder setItemLayout(@LayoutRes int itemLayout) {
         m_configuration.setItemLayout(itemLayout);
         return this;
