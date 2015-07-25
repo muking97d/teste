@@ -22,47 +22,47 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
-public class PaperboyFragmentBuilder {
+public class PaperboyBuilder {
     private final Context               m_context;
     private final PaperboyConfiguration m_configuration;
 
-    public PaperboyFragmentBuilder(@NonNull Context context) {
+    public PaperboyBuilder(@NonNull Context context) {
         m_context = context;
         m_configuration = new PaperboyConfiguration();
     }
 
     @NonNull
-    public PaperboyFragmentBuilder setFile(@Nullable String file) {
+    public PaperboyBuilder setFile(@Nullable String file) {
         m_configuration.setFile(file);
         return this;
     }
 
     @NonNull
-    public PaperboyFragmentBuilder setViewType(@ViewType int viewType) {
+    public PaperboyBuilder setViewType(@ViewType int viewType) {
         m_configuration.setViewType(viewType);
         return this;
     }
 
     @NonNull
-    public PaperboyFragmentBuilder setSectionLayout(@LayoutRes int sectionLayout) {
+    public PaperboyBuilder setSectionLayout(@LayoutRes int sectionLayout) {
         m_configuration.setSectionLayout(sectionLayout);
         return this;
     }
 
     @NonNull
-    public PaperboyFragmentBuilder setTypeLayout(@LayoutRes int typeLayout) {
+    public PaperboyBuilder setTypeLayout(@LayoutRes int typeLayout) {
         m_configuration.setTypeLayout(typeLayout);
         return this;
     }
 
     @NonNull
-    public PaperboyFragmentBuilder setItemLayout(@LayoutRes int itemLayout) {
+    public PaperboyBuilder setItemLayout(@LayoutRes int itemLayout) {
         m_configuration.setItemLayout(itemLayout);
         return this;
     }
 
     @NonNull
-    public PaperboyFragmentBuilder setSortItems(boolean sortItems) {
+    public PaperboyBuilder setSortItems(boolean sortItems) {
         m_configuration.setSortItems(sortItems);
         return this;
     }

@@ -26,7 +26,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import com.github.porokoro.paperboy.PaperboyFragmentBuilder;
+import com.github.porokoro.paperboy.PaperboyBuilder;
 import com.github.porokoro.paperboy.ViewType;
 import com.github.porokoro.paperboy.ViewTypes;
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         m_drawerNavigation.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            Fragment fragment = new PaperboyFragmentBuilder(this)
+            Fragment fragment = new PaperboyBuilder(this)
                     .setViewType(m_viewType)
                     .setSectionLayout(m_sectionLayout)
                     .setTypeLayout(m_typeLayout)
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         item.setChecked(true);
 
-        Fragment fragment = new PaperboyFragmentBuilder(this)
+        Fragment fragment = new PaperboyBuilder(this)
                 .setViewType(m_viewType)
                 .setSectionLayout(m_sectionLayout)
                 .setTypeLayout(m_typeLayout)

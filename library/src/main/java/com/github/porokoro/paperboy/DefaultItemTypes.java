@@ -27,7 +27,7 @@ class DefaultItemTypes {
     private DefaultItemTypes() {
     }
 
-    public static void createFeature(@NonNull Context context, @NonNull PaperboyFragmentBuilder builder) {
+    public static void createFeature(@NonNull Context context, @NonNull PaperboyBuilder builder) {
         new ItemTypeBuilder(context, builder, FEATURE, "Feature", "F")
                 .setTitleSingular(R.string.paperboy_item_type_feature)
                 .setTitlePlural(R.string.paperboy_item_type_features)
@@ -37,7 +37,7 @@ class DefaultItemTypes {
                 .add();
     }
 
-    public static void createBug(@NonNull Context context, @NonNull PaperboyFragmentBuilder builder) {
+    public static void createBug(@NonNull Context context, @NonNull PaperboyBuilder builder) {
         new ItemTypeBuilder(context, builder, BUG, "Bug", "B")
                 .setTitleSingular(R.string.paperboy_item_type_bug)
                 .setTitlePlural(R.string.paperboy_item_type_bugs)
@@ -47,7 +47,7 @@ class DefaultItemTypes {
                 .add();
     }
 
-    public static void createImprovement(@NonNull Context context, @NonNull PaperboyFragmentBuilder builder) {
+    public static void createImprovement(@NonNull Context context, @NonNull PaperboyBuilder builder) {
         new ItemTypeBuilder(context, builder, IMPROVEMENT, "Improvement", "I")
                 .setTitleSingular(R.string.paperboy_item_type_improvement)
                 .setTitlePlural(R.string.paperboy_item_type_improvements)
