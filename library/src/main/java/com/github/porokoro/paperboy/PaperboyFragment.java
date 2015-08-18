@@ -15,8 +15,6 @@
  */
 package com.github.porokoro.paperboy;
 
-import android.app.Activity;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,7 +22,6 @@ import android.support.annotation.RawRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,18 +36,6 @@ public class PaperboyFragment extends Fragment implements JsonDataLoader.Callbac
     private PaperboyAdapter m_adapter;
 
     public PaperboyFragment() {
-    }
-
-    @Override
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
-        super.onInflate(activity, attrs, savedInstanceState);
-
-        TypedArray a = activity.obtainStyledAttributes(attrs,
-                                                       R.styleable.PaperboyFragment,
-                                                       R.attr.paperboyFragmentStyle,
-                                                       0);
-
-        a.recycle();
     }
 
     @Override

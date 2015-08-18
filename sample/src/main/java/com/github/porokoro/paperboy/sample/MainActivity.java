@@ -144,11 +144,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void onSectionSelected(@NonNull MenuItem item) {
-        if (item.isChecked())
-            return;
-
-        item.setChecked(true);
-
         Fragment fragment = new PaperboyBuilder(this)
                 .setViewType(m_viewType)
                 .setSectionLayout(m_sectionLayout)
