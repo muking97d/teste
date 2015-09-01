@@ -17,7 +17,6 @@ package com.github.porokoro.paperboy;
 
 import android.content.Context;
 import android.support.annotation.*;
-import android.support.v4.content.ContextCompat;
 
 public class ItemTypeBuilder {
     private final Context         m_context;
@@ -63,7 +62,7 @@ public class ItemTypeBuilder {
 
     @NonNull
     public ItemTypeBuilder setColorRes(@ColorRes int color) {
-        m_definition.setColor(ContextCompat.getColor(m_context, color));
+        m_definition.setColor(m_context.getColor(color));
         return this;
     }
 
