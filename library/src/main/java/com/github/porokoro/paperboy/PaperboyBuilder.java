@@ -83,7 +83,7 @@ public class PaperboyBuilder {
     }
 
     @NonNull
-    public PaperboyFragment build() {
+    public PaperboyFragment buildFragment() {
         PaperboyFragment fragment = new PaperboyFragment();
 
         if (m_configuration.getItemTypes().get(DefaultItemTypes.FEATURE) == null)

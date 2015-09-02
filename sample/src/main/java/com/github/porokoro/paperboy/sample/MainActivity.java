@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .setIcon(R.drawable.ic_build)
                     .setSortOrder(0)
                     .add()
-                    .build();
+                    .buildFragment();
 
             getSupportFragmentManager().beginTransaction()
                                        .add(R.id.content, fragment)
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setIcon(R.drawable.ic_build)
                 .setSortOrder(0)
                 .add()
-                .build();
+                .buildFragment();
 
         getSupportFragmentManager().beginTransaction()
                                    .replace(R.id.content, fragment)
