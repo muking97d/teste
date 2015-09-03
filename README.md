@@ -8,14 +8,14 @@ Download
 
 Grab via Gradle:
 ```groovy
-compile 'com.github.porokoro.paperboy:paperboy:1.0.0'
+compile 'com.github.porokoro.paperboy:paperboy:2.0.0'
 ```
 or Maven:
 ```xml
 <dependency>
     <groupId>com.github.porokoro.paperboy</groupId>
     <artifactId>paperboy</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
