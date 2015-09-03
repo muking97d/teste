@@ -28,32 +28,38 @@ class DefaultItemTypes {
     }
 
     public static void createFeature(@NonNull Context context, @NonNull PaperboyBuilder builder) {
-        new ItemTypeBuilder(context, builder, FEATURE, "Feature", "F")
-                .setTitleSingular(R.string.paperboy_item_type_feature)
-                .setTitlePlural(R.string.paperboy_item_type_features)
-                .setColorRes(R.color.paperboy_item_type_feature)
-                .setIcon(R.drawable.paperboy_ic_done)
-                .setSortOrder(0)
-                .add();
+        builder.addItemType(
+                new ItemTypeBuilder(context, FEATURE, "Feature", "F")
+                        .setTitleSingular(R.string.paperboy_item_type_feature)
+                        .setTitlePlural(R.string.paperboy_item_type_features)
+                        .setColorRes(R.color.paperboy_item_type_feature)
+                        .setIcon(R.drawable.paperboy_ic_done)
+                        .setSortOrder(0)
+                        .build()
+        );
     }
 
     public static void createBug(@NonNull Context context, @NonNull PaperboyBuilder builder) {
-        new ItemTypeBuilder(context, builder, BUG, "Bug", "B")
-                .setTitleSingular(R.string.paperboy_item_type_bug)
-                .setTitlePlural(R.string.paperboy_item_type_bugs)
-                .setColorRes(R.color.paperboy_item_type_bug)
-                .setIcon(R.drawable.paperboy_ic_bug_report)
-                .setSortOrder(1)
-                .add();
+        builder.addItemType(
+                new ItemTypeBuilder(context, BUG, "Bug", "B")
+                        .setTitleSingular(R.string.paperboy_item_type_bug)
+                        .setTitlePlural(R.string.paperboy_item_type_bugs)
+                        .setColorRes(R.color.paperboy_item_type_bug)
+                        .setIcon(R.drawable.paperboy_ic_bug_report)
+                        .setSortOrder(1)
+                        .build()
+        );
     }
 
     public static void createImprovement(@NonNull Context context, @NonNull PaperboyBuilder builder) {
-        new ItemTypeBuilder(context, builder, IMPROVEMENT, "Improvement", "I")
-                .setTitleSingular(R.string.paperboy_item_type_improvement)
-                .setTitlePlural(R.string.paperboy_item_type_improvements)
-                .setColorRes(R.color.paperboy_item_type_improvement)
-                .setIcon(R.drawable.paperboy_ic_trending_up)
-                .setSortOrder(2)
-                .add();
+        builder.addItemType(
+                new ItemTypeBuilder(context, IMPROVEMENT, "Improvement", "I")
+                        .setTitleSingular(R.string.paperboy_item_type_improvement)
+                        .setTitlePlural(R.string.paperboy_item_type_improvements)
+                        .setColorRes(R.color.paperboy_item_type_improvement)
+                        .setIcon(R.drawable.paperboy_ic_trending_up)
+                        .setSortOrder(2)
+                        .build()
+        );
     }
 }

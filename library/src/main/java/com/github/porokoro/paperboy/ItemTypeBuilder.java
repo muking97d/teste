@@ -19,15 +19,17 @@ import android.content.Context;
 import android.support.annotation.*;
 
 public class ItemTypeBuilder {
-    private final Context         m_context;
-    private final PaperboyBuilder m_fragmentBuilder;
-    private final ItemType        m_definition;
+    private final Context  m_context;
+    private final ItemType m_definition;
 
-    ItemTypeBuilder(@NonNull Context context, @NonNull PaperboyBuilder fragmentBuilder,
-                    int id, @NonNull String name, @NonNull String shorthand) {
+    public ItemTypeBuilder(@NonNull Context context, int id, @NonNull String name, @NonNull String shorthand) {
         m_context = context;
-        m_fragmentBuilder = fragmentBuilder;
         m_definition = new ItemType(id, name, shorthand);
+    }
+
+    public ItemTypeBuilder(@NonNull Context context, int id, @StringRes int name, @StringRes int shorthand) {
+        m_context = context;
+        m_definition = new ItemType(id, context.getString(name), context.getString(shorthand));
     }
 
     @NonNull
@@ -87,11 +89,5 @@ public class ItemTypeBuilder {
     @NonNull
     public ItemType build() {
         return m_definition;
-    }
-
-    @NonNull
-    public PaperboyBuilder add() {
-        m_fragmentBuilder.addDefinition(m_definition);
-        return m_fragmentBuilder;
     }
 }

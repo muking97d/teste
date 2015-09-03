@@ -26,6 +26,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import com.github.porokoro.paperboy.ItemTypeBuilder;
 import com.github.porokoro.paperboy.PaperboyBuilder;
 import com.github.porokoro.paperboy.ViewType;
 import com.github.porokoro.paperboy.ViewTypes;
@@ -71,13 +72,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .setSectionLayout(m_sectionLayout)
                     .setTypeLayout(m_typeLayout)
                     .setItemLayout(m_itemLayout)
-                    .withDefinition(1000, "Custom", "c")
-                    .setColorRes(R.color.item_type_custom)
-                    .setTitleSingular(R.string.item_type_custom)
-                    .setTitlePlural(R.string.item_type_customs)
-                    .setIcon(R.drawable.ic_build)
-                    .setSortOrder(0)
-                    .add()
+                    .addItemType(new ItemTypeBuilder(this, 1000, "Custom", "c")
+                                         .setColorRes(R.color.item_type_custom)
+                                         .setTitleSingular(R.string.item_type_custom)
+                                         .setTitlePlural(R.string.item_type_customs)
+                                         .setIcon(R.drawable.ic_build)
+                                         .setSortOrder(0)
+                                         .build())
                     .buildFragment();
 
             getSupportFragmentManager().beginTransaction()
@@ -150,13 +151,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setTypeLayout(m_typeLayout)
                 .setItemLayout(m_itemLayout)
                 .setSortItems(m_sort)
-                .withDefinition(1000, "Custom", "c")
-                .setColorRes(R.color.item_type_custom)
-                .setTitleSingular(R.string.item_type_custom)
-                .setTitlePlural(R.string.item_type_customs)
-                .setIcon(R.drawable.ic_build)
-                .setSortOrder(0)
-                .add()
+                .addItemType(new ItemTypeBuilder(this, 1000, "Custom", "c")
+                                     .setColorRes(R.color.item_type_custom)
+                                     .setTitleSingular(R.string.item_type_custom)
+                                     .setTitlePlural(R.string.item_type_customs)
+                                     .setIcon(R.drawable.ic_build)
+                                     .setSortOrder(0)
+                                     .build())
                 .buildFragment();
 
         getSupportFragmentManager().beginTransaction()

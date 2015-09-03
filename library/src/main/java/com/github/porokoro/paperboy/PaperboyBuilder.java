@@ -17,7 +17,10 @@ package com.github.porokoro.paperboy;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.*;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RawRes;
 
 public class PaperboyBuilder {
     private final Context               m_context;
@@ -73,13 +76,9 @@ public class PaperboyBuilder {
     }
 
     @NonNull
-    public ItemTypeBuilder withDefinition(int id, @NonNull String name, @NonNull String shorthand) {
-        return new ItemTypeBuilder(m_context, this, id, name, shorthand);
-    }
-
-    @NonNull
-    public ItemTypeBuilder withDefinition(int id, @StringRes int name, @StringRes int shorthand) {
-        return new ItemTypeBuilder(m_context, this, id, m_context.getString(name), m_context.getString(shorthand));
+    public PaperboyBuilder addItemType(@NonNull ItemType itemType) {
+        m_configuration.getItemTypes().put(itemType.getId(), itemType);
+        return this;
     }
 
     @NonNull
@@ -98,9 +97,5 @@ public class PaperboyBuilder {
         fragment.setArguments(args);
 
         return fragment;
-    }
-
-    void addDefinition(@NonNull ItemType definition) {
-        m_configuration.getItemTypes().put(definition.getId(), definition);
     }
 }
