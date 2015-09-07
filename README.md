@@ -42,6 +42,9 @@ To provide alternate versions for different languages proceed as follows:
 * `assets/paperboy/changelog-jp.json`
 * `...`
 
+As an alternative you can use the `res/raw` folder for changelog files. Just
+tell paperboy which file to use by calling `setFileRes(int)` on the builder.
+
 
 ### JSON Structure ###
 
@@ -68,6 +71,8 @@ You write the json files in the following structure:
 ]
 ```
 
+For further examples please see the [sample project](https://github.com/porokoro/paperboy/blob/develop/sample/src/main/assets/paperboy/changelog.json).
+
 The structure should be very simple and straight forward. Please note that all
 **keys** are handled **case insensitive**. So you don't need to worry about
 that.
@@ -87,9 +92,9 @@ For example:
 ]
 ```
 
-### Element types ###
+### Item types ###
 
-You can define an element type in different ways.
+You can define an item type in different ways.
 
 * Feature: `1`, `F` or `FEATURE`
 * Bug: `2`, `B` or `BUG`
@@ -97,6 +102,10 @@ You can define an element type in different ways.
 
 Please note that the **string representations** are handled the same way as the
 json keys, **case insensitive**.
+
+In addition you can define your own item types using the `ItemTypeBuilder` in
+combination with the `addItemType(ItemType)` method on `PaperboyBuilder`. You
+can even override the default ones.
 
 License
 -------
