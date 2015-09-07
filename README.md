@@ -3,10 +3,10 @@ Paperboy
 
 A changelog library for Android
 
-[![Screenshot 1](https://raw.githubusercontent.com/porokoro/paperboy/release/2.0.0/art/screenshot-1-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/release/2.0.0/art/screenshot-1.png)
-[![Screenshot 2](https://raw.githubusercontent.com/porokoro/paperboy/release/2.0.0/art/screenshot-2-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/release/2.0.0/art/screenshot-2.png)
-[![Screenshot 3](https://raw.githubusercontent.com/porokoro/paperboy/release/2.0.0/art/screenshot-3-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/release/2.0.0/art/screenshot-3.png)
-[![Screenshot 4](https://raw.githubusercontent.com/porokoro/paperboy/release/2.0.0/art/screenshot-4-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/release/2.0.0/art/screenshot-4.png)
+[![Screenshot 1](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-1-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-1.png)
+[![Screenshot 2](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-2-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-2.png)
+[![Screenshot 3](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-3-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-3.png)
+[![Screenshot 4](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-4-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-4.png)
 
 Download
 --------
