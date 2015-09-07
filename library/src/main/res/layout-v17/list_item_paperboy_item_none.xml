@@ -17,21 +17,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:paddingLeft="8dp"
-              android:paddingRight="8dp"
+              android:paddingStart="8dp"
+              android:paddingEnd="8dp"
               android:paddingTop="4dp"
               android:paddingBottom="4dp"
               android:background="?android:attr/selectableItemBackground"
               android:clickable="true">
 
-    <ImageView
-            android:id="@+id/type"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="2dp"
-            android:src="@drawable/paperboy_ic_done"
-            android:scaleType="center"
-            android:contentDescription="@string/paperboy_item_type_feature"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:text="@string/paperboy_item_glyph"/>
 
     <TextView
             android:id="@+id/title"

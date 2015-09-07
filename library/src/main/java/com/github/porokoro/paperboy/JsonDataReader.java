@@ -18,6 +18,7 @@ package com.github.porokoro.paperboy;
 import android.support.annotation.NonNull;
 import android.util.JsonReader;
 import android.util.JsonToken;
+import android.util.SparseArray;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,8 +37,14 @@ class JsonDataReader {
 
     private static final String FILE_ENCODING = "UTF-8";
 
+    private final SparseArray<ItemType> m_definitions;
+
+    public JsonDataReader(SparseArray<ItemType> definitions) {
+        m_definitions = definitions;
+    }
+
     @NonNull
-    public static List<PaperboySection> read(@NonNull InputStream input) {
+    public List<PaperboySection> read(@NonNull InputStream input) {
         JsonReader reader = null;
 
         try {
@@ -61,7 +68,7 @@ class JsonDataReader {
     }
 
     @NonNull
-    private static List<PaperboySection> readSectionArray(@NonNull JsonReader reader) throws IOException {
+    private List<PaperboySection> readSectionArray(@NonNull JsonReader reader) throws IOException {
         List<PaperboySection> sections = new ArrayList<>();
         reader.beginArray();
 
@@ -73,7 +80,7 @@ class JsonDataReader {
     }
 
     @NonNull
-    private static PaperboySection readSection(@NonNull JsonReader reader) throws IOException {
+    private PaperboySection readSection(@NonNull JsonReader reader) throws IOException {
         PaperboySection section = new PaperboySection();
         reader.beginObject();
 
@@ -98,7 +105,7 @@ class JsonDataReader {
     }
 
     @NonNull
-    private static List<PaperboyItem> readItemArray(@NonNull JsonReader reader) throws IOException {
+    private List<PaperboyItem> readItemArray(@NonNull JsonReader reader) throws IOException {
         List<PaperboyItem> items = new ArrayList<>();
         reader.beginArray();
 
@@ -110,7 +117,7 @@ class JsonDataReader {
     }
 
     @NonNull
-    private static PaperboyItem readItem(@NonNull JsonReader reader) throws IOException {
+    private PaperboyItem readItem(@NonNull JsonReader reader) throws IOException {
         PaperboyItem item = new PaperboyItem();
         reader.beginObject();
 
@@ -120,10 +127,29 @@ class JsonDataReader {
             switch (name) {
                 case ITEM_TYPE:
                     JsonToken type = reader.peek();
-                    if (type == JsonToken.NUMBER)
-                        item.setType(ItemTypes.fromValue(reader.nextInt()));
-                    else if (type == JsonToken.STRING)
-                        item.setType(ItemTypes.fromValue(toLowerCase(reader.nextString())));
+                    if (type == JsonToken.NUMBER) {
+                        int id = reader.nextInt();
+                        ItemType definition = m_definitions.get(id);
+                        if (definition != null)
+                            item.setType(definition.getId());
+                    }
+                    else if (type == JsonToken.STRING) {
+                        String value = toLowerCase(reader.nextString());
+                        ItemType definition = null;
+                        ItemType def;
+
+                        for (int i = 0; i < m_definitions.size(); i++) {
+                            def = m_definitions.valueAt(i);
+                            if (toLowerCase(def.getShorthand()).equals(value) ||
+                                    toLowerCase(def.getName()).equals(value)) {
+                                definition = def;
+                                break;
+                            }
+                        }
+
+                        if (definition != null)
+                            item.setType(definition.getId());
+                    }
                     break;
                 case ITEM_TITLE:
                     item.setTitle(reader.nextString());

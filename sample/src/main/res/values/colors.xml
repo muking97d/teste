@@ -16,16 +16,6 @@
   -->
 <resources>
 
-    <style name="Paperboy">
-        <item name="paperboyFeatureColor">@color/paperboy_dark_item_type_feature</item>
-        <item name="paperboyBugColor">@color/paperboy_dark_item_type_bug</item>
-        <item name="paperboyImprovementColor">@color/paperboy_dark_item_type_improvement</item>
-    </style>
-
-    <style name="Paperboy.Light">
-        <item name="paperboyFeatureColor">@color/paperboy_light_item_type_feature</item>
-        <item name="paperboyBugColor">@color/paperboy_light_item_type_bug</item>
-        <item name="paperboyImprovementColor">@color/paperboy_light_item_type_improvement</item>
-    </style>
+    <color name="item_type_custom">#ffca28</color>
 
 </resources>

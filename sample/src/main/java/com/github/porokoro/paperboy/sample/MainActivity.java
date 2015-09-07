@@ -15,17 +15,21 @@
  */
 package com.github.porokoro.paperboy.sample;
 
-import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import com.github.porokoro.paperboy.*;
+import com.github.porokoro.paperboy.ItemTypeBuilder;
+import com.github.porokoro.paperboy.PaperboyBuilder;
+import com.github.porokoro.paperboy.ViewType;
+import com.github.porokoro.paperboy.ViewTypes;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,10 +38,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle m_drawerToggle;
 
     @ViewType
-    private int     m_viewType = ViewTypes.NONE;
-    @Theme
-    private int     m_theme    = Themes.LIGHT;
-    private boolean m_sort     = false;
+    private int     m_viewType      = ViewTypes.NONE;
+    @LayoutRes
+    private int     m_sectionLayout = 0;
+    @LayoutRes
+    private int     m_typeLayout    = 0;
+    @LayoutRes
+    private int     m_itemLayout    = 0;
+    private boolean m_sort          = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +67,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         m_drawerNavigation.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            Fragment fragment = new PaperboyFragment.Builder(this)
-                    .setTheme(Themes.LIGHT)
-                    .setFile("paperboy/changelog.json")
-                    .build();
+            Fragment fragment = new PaperboyBuilder(this)
+                    .setViewType(m_viewType)
+                    .setSectionLayout(m_sectionLayout)
+                    .setTypeLayout(m_typeLayout)
+                    .setItemLayout(m_itemLayout)
+                    .addItemType(new ItemTypeBuilder(this, 1000, "Custom", "c")
+                                         .setColorRes(R.color.item_type_custom)
+                                         .setTitleSingular(R.string.item_type_custom)
+                                         .setTitlePlural(R.string.item_type_customs)
+                                         .setIcon(R.drawable.ic_build)
+                                         .setSortOrder(0)
+                                         .build())
+                    .buildFragment();
 
-            getFragmentManager().beginTransaction()
-                                .add(R.id.content, fragment)
-                                .commit();
+            getSupportFragmentManager().beginTransaction()
+                                       .add(R.id.content, fragment)
+                                       .commit();
         }
     }
 
@@ -97,11 +114,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.section_view_type_headers:
                 m_viewType = ViewTypes.HEADER;
                 break;
-            case R.id.section_theme_light:
-                m_theme = Themes.LIGHT;
+            case R.id.section_custom_section_default:
+                m_sectionLayout = 0;
                 break;
-            case R.id.section_theme_dark:
-                m_theme = Themes.DARK;
+            case R.id.section_custom_section_custom:
+                m_sectionLayout = R.layout.view_section_custom;
+                break;
+            case R.id.section_custom_type_default:
+                m_typeLayout = 0;
+                break;
+            case R.id.section_custom_type_custom:
+                m_typeLayout = R.layout.view_type_custom;
+                break;
+            case R.id.section_custom_item_default:
+                m_itemLayout = 0;
+                break;
+            case R.id.section_custom_item_custom:
+                m_itemLayout = R.layout.view_item_custom;
                 break;
             case R.id.section_sort_none:
                 m_sort = false;
@@ -116,20 +145,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void onSectionSelected(@NonNull MenuItem item) {
-        if (item.isChecked())
-            return;
-
-        item.setChecked(true);
-
-        Fragment fragment = new PaperboyFragment.Builder(this)
+        Fragment fragment = new PaperboyBuilder(this)
                 .setViewType(m_viewType)
-                .setTheme(m_theme)
+                .setSectionLayout(m_sectionLayout)
+                .setTypeLayout(m_typeLayout)
+                .setItemLayout(m_itemLayout)
                 .setSortItems(m_sort)
-                .build();
+                .addItemType(new ItemTypeBuilder(this, 1000, "Custom", "c")
+                                     .setColorRes(R.color.item_type_custom)
+                                     .setTitleSingular(R.string.item_type_custom)
+                                     .setTitlePlural(R.string.item_type_customs)
+                                     .setIcon(R.drawable.ic_build)
+                                     .setSortOrder(0)
+                                     .build())
+                .buildFragment();
 
-        getFragmentManager().beginTransaction()
-                            .replace(R.id.content, fragment)
-                            .commit();
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(R.id.content, fragment)
+                                   .commit();
 
         m_drawerLayout.closeDrawer(m_drawerNavigation);
     }

@@ -20,9 +20,11 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-@IntDef({ Themes.NONE,
-          Themes.DARK,
-          Themes.LIGHT })
+@IntDef({ ElementTypes.SECTION_HEADER,
+          ElementTypes.TYPE_HEADER,
+          ElementTypes.ITEM_NONE,
+          ElementTypes.ITEM_LABEL,
+          ElementTypes.ITEM_ICON })
 @Retention(RetentionPolicy.SOURCE)
-public @interface Theme {
+@interface ElementType {
 }

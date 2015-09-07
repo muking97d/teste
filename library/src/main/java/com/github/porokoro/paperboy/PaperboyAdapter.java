@@ -18,17 +18,18 @@ package com.github.porokoro.paperboy;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.support.annotation.IntDef;
+import android.support.annotation.ColorInt;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.util.SparseIntArray;
+import android.support.annotation.Nullable;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,57 +39,49 @@ import static android.support.v7.widget.RecyclerView.Adapter;
 import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 
-public class PaperboyAdapter extends Adapter<ViewHolder> {
-    private static final int ELEMENT_TYPE_SECTION_HEADER = 1;
-    private static final int ELEMENT_TYPE_TYPE_HEADER    = 2;
-    private static final int ELEMENT_TYPE_ITEM_NONE      = 3;
-    private static final int ELEMENT_TYPE_ITEM_LABEL     = 4;
-    private static final int ELEMENT_TYPE_ITEM_ICON      = 5;
+class PaperboyAdapter extends Adapter<ViewHolder> {
+    private static final int    DEFAULT_COLOR = Color.BLACK;
+    private static final String TAG           = PaperboyAdapter.class.getSimpleName();
 
-    private static final int DEFAULT_COLOR = Color.BLACK;
-
-    private final LayoutInflater m_inflater;
-    private final List<Element>  m_dataset;
-    private final SparseIntArray m_colors;
-    @ViewType
-    private final int            m_viewType;
+    private final LayoutInflater        m_inflater;
+    private final List<Element>         m_dataset;
     @ElementType
-    private final int            m_elementType;
-    private final boolean        m_sortItems;
+    private final int                   m_elementType;
+    private final PaperboyConfiguration m_config;
 
-    public PaperboyAdapter(@NonNull Context context, @NonNull SparseIntArray colors,
-                           @ViewType int viewType, boolean sortItems) {
+    public PaperboyAdapter(@NonNull Context context, @NonNull PaperboyConfiguration config) {
         m_inflater = LayoutInflater.from(context);
         m_dataset = new ArrayList<>();
-        m_colors = colors;
-        m_viewType = viewType;
-        m_elementType = getElementType(viewType);
-        m_sortItems = sortItems;
+        m_config = config;
+        m_elementType = getElementType(config.getViewType());
     }
 
     public void setData(@NonNull List<PaperboySection> dataset) {
         for (PaperboySection section : dataset) {
-            if (m_sortItems || m_viewType == ViewTypes.HEADER) {
+            if (m_config.isSortItems() || m_config.getViewType() == ViewTypes.HEADER) {
                 Collections.sort(section.getItems(), new Comparator<PaperboyItem>() {
                     @Override
                     public int compare(@NonNull PaperboyItem lhs, @NonNull PaperboyItem rhs) {
-                        return lhs.getType() - rhs.getType();
+                        ItemType lhsDef = m_config.getItemTypes().get(lhs.getType());
+                        ItemType rhsDef = m_config.getItemTypes().get(rhs.getType());
+                        return (lhsDef != null ? lhsDef.getSortOrder() : Integer.MAX_VALUE) -
+                                (rhsDef != null ? rhsDef.getSortOrder() : Integer.MAX_VALUE);
                     }
                 });
             }
 
             Element sectionElement = new Element();
-            sectionElement.type = ELEMENT_TYPE_SECTION_HEADER;
+            sectionElement.type = ElementTypes.SECTION_HEADER;
             sectionElement.data = section;
             m_dataset.add(sectionElement);
 
-            int prevItemType = ItemTypes.NONE;
+            int prevItemType = DefaultItemTypes.NONE;
 
             for (PaperboyItem item : section.getItems()) {
-                if (item.getType() != prevItemType && m_viewType == ViewTypes.HEADER) {
+                if (item.getType() != prevItemType && m_config.getViewType() == ViewTypes.HEADER) {
                     Element typeElement = new Element();
-                    typeElement.type = ELEMENT_TYPE_TYPE_HEADER;
-                    typeElement.data = item.getType();
+                    typeElement.type = ElementTypes.TYPE_HEADER;
+                    typeElement.data = m_config.getItemTypes().get(item.getType());
                     m_dataset.add(typeElement);
 
                     prevItemType = item.getType();
@@ -109,7 +102,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderSection(@NonNull View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.txt_name);
+            name = (TextView) itemView.findViewById(R.id.name);
         }
     }
 
@@ -118,7 +111,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderType(@NonNull View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.txt_name);
+            name = (TextView) itemView.findViewById(R.id.name);
         }
     }
 
@@ -127,7 +120,7 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderItemNone(@NonNull View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.txt_title);
+            title = (TextView) itemView.findViewById(R.id.title);
         }
     }
 
@@ -137,8 +130,8 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderItemLabel(@NonNull View itemView) {
             super(itemView);
-            type = (TextView) itemView.findViewById(R.id.txt_type);
-            title = (TextView) itemView.findViewById(R.id.txt_title);
+            type = (TextView) itemView.findViewById(R.id.type);
+            title = (TextView) itemView.findViewById(R.id.title);
         }
     }
 
@@ -148,18 +141,9 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
 
         public ViewHolderItemIcon(@NonNull View itemView) {
             super(itemView);
-            type = (ImageView) itemView.findViewById(R.id.img_type);
-            title = (TextView) itemView.findViewById(R.id.txt_title);
+            type = (ImageView) itemView.findViewById(R.id.type);
+            title = (TextView) itemView.findViewById(R.id.title);
         }
-    }
-
-    @IntDef({ ELEMENT_TYPE_SECTION_HEADER,
-              ELEMENT_TYPE_TYPE_HEADER,
-              ELEMENT_TYPE_ITEM_NONE,
-              ELEMENT_TYPE_ITEM_LABEL,
-              ELEMENT_TYPE_ITEM_ICON })
-    @Retention(RetentionPolicy.SOURCE)
-    private @interface ElementType {
     }
 
     private static class Element {
@@ -171,24 +155,32 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, @ElementType int viewType) {
         switch (viewType) {
-            case ELEMENT_TYPE_SECTION_HEADER: {
-                View rootView = m_inflater.inflate(R.layout.list_item_paperboy_section, parent, false);
+            case ElementTypes.SECTION_HEADER: {
+                int sectionLayout = R.layout.list_item_paperboy_section;
+                if (m_config.getSectionLayout() != 0)
+                    sectionLayout = m_config.getSectionLayout();
+
+                View rootView = m_inflater.inflate(sectionLayout, parent, false);
                 return new ViewHolderSection(rootView);
             }
-            case ELEMENT_TYPE_TYPE_HEADER: {
-                View rootView = m_inflater.inflate(R.layout.list_item_paperboy_type, parent, false);
+            case ElementTypes.TYPE_HEADER: {
+                int typeLayout = R.layout.list_item_paperboy_type;
+                if (m_config.getTypeLayout() != 0)
+                    typeLayout = m_config.getTypeLayout();
+
+                View rootView = m_inflater.inflate(typeLayout, parent, false);
                 return new ViewHolderType(rootView);
             }
-            case ELEMENT_TYPE_ITEM_NONE: {
-                View rootView = m_inflater.inflate(R.layout.list_item_paperboy_item_none, parent, false);
+            case ElementTypes.ITEM_NONE: {
+                View rootView = inflateItemView(R.layout.list_item_paperboy_item_none, parent);
                 return new ViewHolderItemNone(rootView);
             }
-            case ELEMENT_TYPE_ITEM_LABEL: {
-                View rootView = m_inflater.inflate(R.layout.list_item_paperboy_item_label, parent, false);
+            case ElementTypes.ITEM_LABEL: {
+                View rootView = inflateItemView(R.layout.list_item_paperboy_item_label, parent);
                 return new ViewHolderItemLabel(rootView);
             }
-            case ELEMENT_TYPE_ITEM_ICON: {
-                View rootView = m_inflater.inflate(R.layout.list_item_paperboy_item_icon, parent, false);
+            case ElementTypes.ITEM_ICON: {
+                View rootView = inflateItemView(R.layout.list_item_paperboy_item_icon, parent);
                 return new ViewHolderItemIcon(rootView);
             }
             default:
@@ -202,80 +194,80 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
             ViewHolderSection viewHolder = (ViewHolderSection) holder;
             PaperboySection data = (PaperboySection) m_dataset.get(position).data;
 
-            viewHolder.name.setText(data.getName());
+            if (viewHolder.name == null)
+                Log.w(TAG, "View id 'R.id.name' missing in custom layout");
+            else
+                viewHolder.name.setText(data.getName());
         }
         else if (holder instanceof ViewHolderType) {
             ViewHolderType viewHolder = (ViewHolderType) holder;
-            @ItemType int data = (int) m_dataset.get(position).data;
+            ItemType data = (ItemType) m_dataset.get(position).data;
 
-            switch (data) {
-                case ItemTypes.FEATURE:
-                    viewHolder.name.setText(R.string.paperboy_item_type_features);
-                    viewHolder.name.setTextColor(getColor(data));
-                    break;
-                case ItemTypes.BUG:
-                    viewHolder.name.setText(R.string.paperboy_item_type_bugs);
-                    viewHolder.name.setTextColor(getColor(data));
-                    break;
-                case ItemTypes.IMPROVEMENT:
-                    viewHolder.name.setText(R.string.paperboy_item_type_improvements);
-                    viewHolder.name.setTextColor(getColor(data));
-                    break;
+            if (viewHolder.name == null)
+                Log.w(TAG, "View id 'R.id.name' missing in custom layout");
+            else {
+                if (data == null)
+                    viewHolder.name.setVisibility(View.GONE);
+                else {
+                    viewHolder.name.setVisibility(View.VISIBLE);
+                    viewHolder.name.setText(data.getTitlePlural());
+                    viewHolder.name.setTextColor(data.getColor());
+                }
             }
         }
         else if (holder instanceof ViewHolderItemNone) {
             ViewHolderItemNone viewHolder = (ViewHolderItemNone) holder;
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
 
-            viewHolder.title.setText(data.getTitle());
+            if (viewHolder.title == null)
+                Log.w(TAG, "View id 'R.id.title' missing in custom layout");
+            else
+                viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
         else if (holder instanceof ViewHolderItemLabel) {
             ViewHolderItemLabel viewHolder = (ViewHolderItemLabel) holder;
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
+            ItemType definition = m_config.getItemTypes().get(data.getType());
 
-            switch (data.getType()) {
-                case ItemTypes.FEATURE:
-                    viewHolder.type.setText(R.string.paperboy_item_type_feature);
+            if (viewHolder.type == null)
+                Log.w(TAG, "View id 'R.id.type' missing in custom layout");
+            else {
+                if (definition == null)
+                    viewHolder.type.setVisibility(View.GONE);
+                else {
+                    viewHolder.type.setVisibility(View.VISIBLE);
+                    viewHolder.type.setText(definition.getTitleSingular());
                     viewHolder.type.setBackgroundResource(R.drawable.paperboy_label_background);
-                    viewHolder.type.getBackground().setColorFilter(getColor(data.getType()),
-                                                                   PorterDuff.Mode.SRC_ATOP);
-                    break;
-                case ItemTypes.BUG:
-                    viewHolder.type.setText(R.string.paperboy_item_type_bug);
-                    viewHolder.type.setBackgroundResource(R.drawable.paperboy_label_background);
-                    viewHolder.type.getBackground().setColorFilter(getColor(data.getType()),
-                                                                   PorterDuff.Mode.SRC_ATOP);
-                    break;
-                case ItemTypes.IMPROVEMENT:
-                    viewHolder.type.setText(R.string.paperboy_item_type_improvement);
-                    viewHolder.type.setBackgroundResource(R.drawable.paperboy_label_background);
-                    viewHolder.type.getBackground().setColorFilter(getColor(data.getType()),
-                                                                   PorterDuff.Mode.SRC_ATOP);
-                    break;
+                    viewHolder.type.getBackground().setColorFilter(getColor(definition), PorterDuff.Mode.SRC_ATOP);
+                }
             }
 
-            viewHolder.title.setText(data.getTitle());
+            if (viewHolder.title == null)
+                Log.w(TAG, "View id 'R.id.title' missing in custom layout");
+            else
+                viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
         else if (holder instanceof ViewHolderItemIcon) {
             ViewHolderItemIcon viewHolder = (ViewHolderItemIcon) holder;
             PaperboyItem data = (PaperboyItem) m_dataset.get(position).data;
+            ItemType definition = m_config.getItemTypes().get(data.getType());
 
-            switch (data.getType()) {
-                case ItemTypes.FEATURE:
-                    viewHolder.type.setImageResource(R.drawable.paperboy_ic_done);
-                    viewHolder.type.setColorFilter(getColor(data.getType()));
-                    break;
-                case ItemTypes.BUG:
-                    viewHolder.type.setImageResource(R.drawable.paperboy_ic_bug_report);
-                    viewHolder.type.setColorFilter(getColor(data.getType()));
-                    break;
-                case ItemTypes.IMPROVEMENT:
-                    viewHolder.type.setImageResource(R.drawable.paperboy_ic_trending_up);
-                    viewHolder.type.setColorFilter(getColor(data.getType()));
-                    break;
+            if (viewHolder.type == null)
+                Log.w(TAG, "View id 'R.id.type' missing in custom layout");
+            else {
+                if (definition == null)
+                    viewHolder.type.setVisibility(View.GONE);
+                else {
+                    viewHolder.type.setVisibility(View.VISIBLE);
+                    viewHolder.type.setImageResource(definition.getIcon());
+                    viewHolder.type.setColorFilter(getColor(definition));
+                }
             }
 
-            viewHolder.title.setText(data.getTitle());
+            if (viewHolder.title == null)
+                Log.w(TAG, "View id 'R.id.title' missing in custom layout");
+            else
+                viewHolder.title.setText(Html.fromHtml(data.getTitle()));
         }
     }
 
@@ -289,8 +281,9 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
         return m_dataset.size();
     }
 
-    private int getColor(@ItemType int type) {
-        int color = m_colors.get(type);
+    @ColorInt
+    private int getColor(@Nullable ItemType definition) {
+        int color = definition == null ? 0 : definition.getColor();
 
         return color == 0 ? DEFAULT_COLOR : color;
     }
@@ -299,12 +292,19 @@ public class PaperboyAdapter extends Adapter<ViewHolder> {
     private int getElementType(@ViewType int type) {
         switch (type) {
             case ViewTypes.ICON:
-                return ELEMENT_TYPE_ITEM_ICON;
+                return ElementTypes.ITEM_ICON;
             case ViewTypes.LABEL:
-                return ELEMENT_TYPE_ITEM_LABEL;
+                return ElementTypes.ITEM_LABEL;
             case ViewTypes.NONE:
             default:
-                return ELEMENT_TYPE_ITEM_NONE;
+                return ElementTypes.ITEM_NONE;
         }
+    }
+
+    private View inflateItemView(@LayoutRes int layoutRes, @NonNull ViewGroup parent) {
+        if (m_config.getItemLayout() != 0)
+            layoutRes = m_config.getItemLayout();
+
+        return m_inflater.inflate(layoutRes, parent, false);
     }
 }

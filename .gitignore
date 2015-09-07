@@ -5,6 +5,7 @@
 /.idea/uiDesigner.xml
 /.idea/dictionaries
 /.idea/libraries
+/.idea/shelf
 local.properties
 gradle.properties
 *.iml

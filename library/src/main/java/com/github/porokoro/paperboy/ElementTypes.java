@@ -15,19 +15,13 @@
  */
 package com.github.porokoro.paperboy;
 
-public class Themes {
-    public static final int NONE  = 0;
-    public static final int DARK  = 1;
-    public static final int LIGHT = 2;
+class ElementTypes {
+    public static final int SECTION_HEADER = 1;
+    public static final int TYPE_HEADER    = 2;
+    public static final int ITEM_NONE      = 3;
+    public static final int ITEM_LABEL     = 4;
+    public static final int ITEM_ICON      = 5;
 
-    @Theme
-    public static int fromValue(int value) {
-        switch (value) {
-            case DARK:
-            case LIGHT:
-                return value;
-            default:
-                return NONE;
-        }
+    private ElementTypes() {
     }
 }

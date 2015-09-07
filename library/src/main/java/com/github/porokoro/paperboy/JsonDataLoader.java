@@ -16,9 +16,12 @@
 package com.github.porokoro.paperboy;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RawRes;
+import android.util.SparseArray;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,32 +29,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class JsonDataLoader extends AsyncTask<String, Integer, List<PaperboySection>> {
+class JsonDataLoader extends AsyncTask<Void, Integer, List<PaperboySection>> {
 
-    private final Context  m_context;
-    private final Callback m_callback;
+    private final Context        m_context;
+    private final String         m_file;
+    private final int            m_fileRes;
+    private final Callback       m_callback;
+    private final JsonDataReader m_reader;
 
-    public JsonDataLoader(@NonNull Context context, @NonNull Callback callback) {
+    public JsonDataLoader(@NonNull Context context, @Nullable String file, @RawRes int fileRes,
+                          @NonNull SparseArray<ItemType> definitions, @NonNull Callback callback) {
         m_context = context.getApplicationContext();
+        m_file = file;
+        m_fileRes = fileRes;
         m_callback = callback;
+        m_reader = new JsonDataReader(definitions);
     }
 
     @NonNull
     @Override
-    protected List<PaperboySection> doInBackground(@NonNull String... params) {
-        String file = params.length > 0 ? params[0] : null;
+    protected List<PaperboySection> doInBackground(@NonNull Void... params) {
+        if (m_fileRes != 0) {
+            InputStream input = openFileRes(m_fileRes);
 
-        if (file == null)
-            file = "paperboy/changelog-%s.json";
+            if (input == null)
+                return new ArrayList<>(0);
 
-        InputStream input = openFile(file);
+            return m_reader.read(input);
+        }
+        else {
+            String file = m_file;
 
-        if (input == null)
-            input = openFile("paperboy/changelog.json");
-        if (input == null)
-            return new ArrayList<>(0);
+            if (file == null)
+                file = "paperboy/changelog-%s.json";
 
-        return JsonDataReader.read(input);
+            InputStream input = openFile(file);
+
+            if (input == null)
+                input = openFile("paperboy/changelog.json");
+            if (input == null)
+                return new ArrayList<>(0);
+
+            return m_reader.read(input);
+        }
     }
 
     @Override
@@ -67,6 +87,16 @@ class JsonDataLoader extends AsyncTask<String, Integer, List<PaperboySection>> {
             return m_context.getAssets().open(fileName);
         }
         catch (IOException e) {
+            return null;
+        }
+    }
+
+    @Nullable
+    private InputStream openFileRes(@RawRes int fileRes) {
+        try {
+            return m_context.getResources().openRawResource(fileRes);
+        }
+        catch (Resources.NotFoundException e) {
             return null;
         }
     }

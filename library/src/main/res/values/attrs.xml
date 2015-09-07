@@ -19,13 +19,11 @@
     <attr name="paperboyFragmentStyle" format="reference"/>
 
     <declare-styleable name="PaperboyFragment">
-        <attr name="paperboyFeatureColor" format="reference|color"/>
-        <attr name="paperboyBugColor" format="reference|color"/>
-        <attr name="paperboyImprovementColor" format="reference|color"/>
         <attr name="paperboyViewType" format="enum">
             <enum name="none" value="1"/>
             <enum name="icon" value="2"/>
             <enum name="label" value="3"/>
+            <enum name="header" value="4"/>
         </attr>
         <attr name="paperboySortItems" format="boolean"/>
     </declare-styleable>
