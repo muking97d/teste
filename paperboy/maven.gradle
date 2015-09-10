@@ -1,0 +1,135 @@
+apply plugin: 'signing'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.github.porokoro.paperboy'
+version = android.defaultConfig.versionName
+
+def isReleaseBuild() {
+    return android.defaultConfig.versionName.contains("SNAPSHOT") == false
+}
+
+def getNexusUsername() {
+    return hasProperty('nexus.username') ? getProperty('nexus.username') : ''
+}
+
+def getNexusPassword() {
+    return hasProperty('nexus.password') ? getProperty('nexus.password') : ''
+}
+
+def getBintrayUsername() {
+    return hasProperty('bintray.username') ? getProperty('bintray.username') : ''
+}
+
+def getBintrayKey() {
+    return hasProperty('bintray.key') ? getProperty('bintray.key') : ''
+}
+
+def libraryName = 'Paperboy'
+def libraryDesc = 'A changelog library for Android'
+def siteUrl = 'https://github.com/porokoro/paperboy'
+def gitUrl = 'https://github.com/porokoro/paperboy.git'
+
+bintray {
+    user = getBintrayUsername()
+    key = getBintrayKey()
+    configurations = ['archives']
+
+    pkg {
+        repo = 'maven'
+        name = libraryName
+        desc = libraryDesc
+        websiteUrl = siteUrl
+        issueTrackerUrl = "$siteUrl/issues"
+        vcsUrl = gitUrl
+        licenses = ['Apache-2.0']
+        labels = ['aar', 'android']
+
+        version {
+            name = android.defaultConfig.versionName
+
+            /*mavenCentralSync {
+                user = getNexusUsername()
+                password = getNexusPassword()
+            }*/
+        }
+    }
+}
+
+    install {
+        repositories.mavenInstaller {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            pom.project {
+                name libraryName
+                packaging 'aar'
+                description libraryDesc
+                url siteUrl
+
+                scm {
+                    url siteUrl
+                    connection "scm:git:$gitUrl"
+                    developerConnection "scm:git:$gitUrl"
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'porokoro'
+                        name 'Dominik Hibbeln'
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
+
+afterEvaluate { project ->
+    android.libraryVariants.all { variant ->
+        if (!variant.name.equals('release'))
+            return
+
+        task androidJavadoc(type: Javadoc, dependsOn: [assembleDebug, assembleRelease]) {
+            title = "${rootProject.name} ${android.defaultConfig.versionName} API"
+            description = "Generates javadoc for ${variant.name}."
+
+            source = variant.javaCompile.source
+            destinationDir = new File(destinationDir, variant.baseName)
+
+            classpath = files(android.bootClasspath, variant.javaCompile.classpath)
+            options.links 'http://docs.oracle.com/javase/7/docs/api/'
+            options.linksOffline 'http://d.android.com/reference/',
+                    "${android.sdkDirectory}/docs/reference/"
+
+            exclude '**/BuildConfig.java'
+            exclude '**/R.java'
+
+            failOnError false
+        }
+    }
+
+    task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
+        classifier = 'javadoc'
+        from androidJavadoc.destinationDir
+    }
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.sourceFiles
+    }
+
+    artifacts {
+        archives androidSourcesJar
+        archives androidJavadocJar
+    }
+}
