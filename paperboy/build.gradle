@@ -56,4 +56,4 @@ afterEvaluate {
     }
 }
 
-apply from: 'maven.gradle'
+apply from: 'bintray.gradle'
