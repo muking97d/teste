@@ -15,10 +15,9 @@
  */
 package com.github.porokoro.paperboy;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.*;
+import android.support.v4.content.ContextCompat;
 
 public class ItemTypeBuilder {
     private final Context  m_context;
@@ -66,7 +65,7 @@ public class ItemTypeBuilder {
 
     @NonNull
     public ItemTypeBuilder setColorRes(@ColorRes int color) {
-        m_definition.setColor(getColorCompat(color));
+        m_definition.setColor(ContextCompat.getColor(m_context, color));
         return this;
     }
 
@@ -91,15 +90,5 @@ public class ItemTypeBuilder {
     @NonNull
     public ItemType build() {
         return m_definition;
-    }
-
-    @TargetApi(23)
-    @SuppressWarnings("deprecation")
-    private int getColorCompat(@ColorRes int color) {
-        if (Build.VERSION.SDK_INT < 23)
-            //noinspection deprecation
-            return m_context.getResources().getColor(color);
-
-        return m_context.getColor(color);
     }
 }
