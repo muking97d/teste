@@ -9,3 +9,7 @@ allprojects {
         jcenter()
     }
 }
+
+task clean(type: Delete, group: 'build') {
+    delete 'build/'
+}
