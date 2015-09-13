@@ -1,7 +1,5 @@
 language: android
-jdk:
-    - oraclejdk7
-    - oraclejdk8
+jdk: oraclejdk7
 
 android:
     components:
@@ -10,3 +8,8 @@ android:
         - build-tools-23.0.1
         - android-23
         - extra-android-m2repository
+
+script: "./gradlew build"
+
+before_install:
+ - chmod +x gradlew
