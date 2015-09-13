@@ -1,6 +1,11 @@
 Paperboy
 ========
 
+[![License](https://img.shields.io/github/license/porokoro/paperboy.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Tag](https://img.shields.io/github/tag/porokoro/paperboy.svg)](https://github.com/porokoro/paperboy/tags)
+[![Bintray](https://img.shields.io/bintray/v/porokoro/maven/paperboy.svg)](https://bintray.com/porokoro/maven/paperboy)
+[![Travis](https://img.shields.io/travis/porokoro/paperboy/develop.svg)](https://travis-ci.org/porokoro/paperboy)
+
 A changelog library for Android
 
 [![Screenshot 1](https://raw.githubusercontent.com/porokoro/paperboy/develop/art/screenshot-1-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/develop/art/screenshot-1.png)
