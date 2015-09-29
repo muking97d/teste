@@ -13,26 +13,9 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.github.porokoro.paperboy;
+package com.github.porokoro.paperboy
 
-public class ViewTypes {
-    public static final int NONE   = 1;
-    public static final int ICON   = 2;
-    public static final int LABEL  = 3;
-    public static final int HEADER = 4;
-
-    private ViewTypes() {
-    }
-
-    @ViewType
-    public static int fromValue(int value) {
-        switch (value) {
-            case ICON:
-            case LABEL:
-            case HEADER:
-                return value;
-            default:
-                return NONE;
-        }
-    }
+internal class PaperboySection() {
+    var name = ""
+    var items = listOf<PaperboyItem>()
 }

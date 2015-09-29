@@ -4,6 +4,7 @@ def versionPatch = 1
 def versionBuild = 0
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 23
@@ -15,6 +16,10 @@ android {
         targetSdkVersion 23
         versionCode versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 
     buildTypes {
@@ -37,5 +42,8 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
+
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.13.1514'
+
     compile project(':paperboy')
 }

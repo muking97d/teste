@@ -13,15 +13,10 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.github.porokoro.paperboy;
+package com.github.porokoro.paperboy
 
-class ElementTypes {
-    public static final int SECTION_HEADER = 1;
-    public static final int TYPE_HEADER    = 2;
-    public static final int ITEM_NONE      = 3;
-    public static final int ITEM_LABEL     = 4;
-    public static final int ITEM_ICON      = 5;
-
-    private ElementTypes() {
-    }
+internal class PaperboyItem() {
+    var type = DefaultItemTypes.NONE
+    var title = ""
+    var description = ""
 }

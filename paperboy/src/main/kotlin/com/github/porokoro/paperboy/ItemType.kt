@@ -13,18 +13,12 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.github.porokoro.paperboy;
+package com.github.porokoro.paperboy
 
-import android.support.annotation.IntDef;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-@IntDef({ ViewTypes.NONE,
-          ViewTypes.ICON,
-          ViewTypes.LABEL,
-          ViewTypes.HEADER })
-@Retention(RetentionPolicy.SOURCE)
-public @interface ViewType {
-
+internal class ItemType(var id: Int = 0, var name: String = "", var shorthand: String = "") {
+    var titleSingular = ""
+    var titlePlural = ""
+    var color = 0
+    var icon = 0
+    var sortOrder = Int.MAX_VALUE
 }

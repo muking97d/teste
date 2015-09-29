@@ -13,18 +13,12 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.github.porokoro.paperboy;
+package com.github.porokoro.paperboy
 
-import android.support.annotation.IntDef;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-@IntDef({ ElementTypes.SECTION_HEADER,
-          ElementTypes.TYPE_HEADER,
-          ElementTypes.ITEM_NONE,
-          ElementTypes.ITEM_LABEL,
-          ElementTypes.ITEM_ICON })
-@Retention(RetentionPolicy.SOURCE)
-@interface ElementType {
+internal object ElementTypes {
+    val SECTION_HEADER = 1
+    val TYPE_HEADER = 2
+    val ITEM_NONE = 3
+    val ITEM_LABEL = 4
+    val ITEM_ICON = 5
 }
