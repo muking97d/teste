@@ -44,7 +44,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:recyclerview-v7:23.0.1'
 
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.13.1514'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.14.449'
 }
 
 afterEvaluate {

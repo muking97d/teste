@@ -17,7 +17,7 @@ package com.github.porokoro.paperboy.extensions
 
 import android.util.SparseArray
 
-internal fun <T> SparseArray<T>.iterator() = SparseArrayIterator(this)
+internal operator fun <T> SparseArray<T>.iterator() = SparseArrayIterator(this)
 
 internal inline fun <T> SparseArray<T>.forEach(operation: (Pair<Int, T>) -> Unit) {
     for (element in this) operation(element)
