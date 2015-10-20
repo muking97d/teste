@@ -36,7 +36,7 @@
             android:textStyle="bold"
             android:background="#D50000"/>
 
-    <TextView
+    <com.github.porokoro.paperboy.TouchDispatchingTextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
