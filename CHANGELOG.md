@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 2.1.0
+-------------
+- Android Support Libraries updated to version 23.1.0.
+- Make HTML links inside of item texts clickable (closes #2).
+
 Version 2.0.1
 -------------
 - Fixed a crash when using Paperboy on devices with Android API Level lower
