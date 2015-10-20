@@ -23,6 +23,9 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -222,7 +225,7 @@ class PaperboyAdapter extends Adapter<ViewHolder> {
             if (viewHolder.title == null)
                 Log.w(TAG, "View id 'R.id.title' missing in custom layout");
             else
-                viewHolder.title.setText(Html.fromHtml(data.getTitle()));
+                setHtmlText(viewHolder.title, data.getTitle());
         }
         else if (holder instanceof ViewHolderItemLabel) {
             ViewHolderItemLabel viewHolder = (ViewHolderItemLabel) holder;
@@ -245,7 +248,7 @@ class PaperboyAdapter extends Adapter<ViewHolder> {
             if (viewHolder.title == null)
                 Log.w(TAG, "View id 'R.id.title' missing in custom layout");
             else
-                viewHolder.title.setText(Html.fromHtml(data.getTitle()));
+                setHtmlText(viewHolder.title, data.getTitle());
         }
         else if (holder instanceof ViewHolderItemIcon) {
             ViewHolderItemIcon viewHolder = (ViewHolderItemIcon) holder;
@@ -267,7 +270,7 @@ class PaperboyAdapter extends Adapter<ViewHolder> {
             if (viewHolder.title == null)
                 Log.w(TAG, "View id 'R.id.title' missing in custom layout");
             else
-                viewHolder.title.setText(Html.fromHtml(data.getTitle()));
+                setHtmlText(viewHolder.title, data.getTitle());
         }
     }
 
@@ -306,5 +309,26 @@ class PaperboyAdapter extends Adapter<ViewHolder> {
             layoutRes = m_config.getItemLayout();
 
         return m_inflater.inflate(layoutRes, parent, false);
+    }
+
+    private void setHtmlText(@NonNull TextView textView, @NonNull String html) {
+        Spanned spanned = Html.fromHtml(html);
+        ClickableSpan[] spans = null;
+
+        textView.setText(spanned);
+
+        if (spanned != null)
+            spans = spanned.getSpans(0, spanned.length(), ClickableSpan.class);
+        if (spans != null && spans.length > 0) {
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+            if (!(textView instanceof TouchDispatchingTextView)) {
+                Log.w(TAG, "Use " + TouchDispatchingTextView.class.getName() +
+                        " for View id 'R.id.title' in your custom layout when working with HTML links");
+            }
+        }
+        else {
+            textView.setMovementMethod(null);
+        }
     }
 }

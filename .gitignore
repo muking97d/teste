@@ -1,13 +1,9 @@
 .gradle
-/build
-/.idea/workspace.xml
-/.idea/gradle.xml
-/.idea/uiDesigner.xml
-/.idea/dictionaries
-/.idea/libraries
-/.idea/shelf
+/build/
+/.idea/
 local.properties
 gradle.properties
 *.iml
 *.gpg
+*.keystore
 .DS_Store
