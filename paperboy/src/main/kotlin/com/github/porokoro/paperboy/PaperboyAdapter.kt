@@ -20,6 +20,8 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.support.v7.widget.RecyclerView
 import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -149,7 +151,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
             if (holder.title == null)
                 Log.w(TAG, "View id 'R.id.title' missing in custom layout")
             else
-                holder.title.text = Html.fromHtml(data.title)
+                holder.title.htmlText = data.title
         }
         is ViewHolderItemLabel -> {
             val data = dataset.get(position).data as PaperboyItem
@@ -171,7 +173,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
             if (holder.title == null)
                 Log.w(TAG, "View id 'R.id.title' missing in custom layout")
             else
-                holder.title.text = Html.fromHtml(data.title)
+                holder.title.htmlText = data.title
         }
         is ViewHolderItemIcon -> {
             val data = dataset.get(position).data as PaperboyItem
@@ -192,7 +194,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
             if (holder.title == null)
                 Log.w(TAG, "View id 'R.id.title' missing in custom layout")
             else
-                holder.title.text = Html.fromHtml(data.title)
+                holder.title.htmlText = data.title
         }
     }
 
@@ -211,4 +213,22 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
         ViewTypes.NONE -> ElementTypes.ITEM_NONE
         else -> ElementTypes.ITEM_NONE
     }
+
+    private var TextView.htmlText: CharSequence
+        get() = text
+        set(value) {
+            val spanned = Html.fromHtml(value.toString())
+            val spans = spanned?.getSpans(0, spanned.length(), ClickableSpan::class.java)
+
+            text = spanned
+
+            if (spans != null && spans.size() > 0) {
+                movementMethod = LinkMovementMethod.getInstance()
+
+                if (this !is TouchDispatchingTextView)
+                    Log.w(TAG, "Use ${TouchDispatchingTextView::class.java.name} for View id 'R.id.title' " +
+                            "in your custom layout when working with HTML links")
+            } else
+                movementMethod = null
+        }
 }

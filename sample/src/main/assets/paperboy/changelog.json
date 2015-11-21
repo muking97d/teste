@@ -1,5 +1,14 @@
 [
     {
+        "name": "2.1.0",
+        "items": [
+            {
+                "type": "F",
+                "title": "When using <b>HTML</b> inside your items you can now use <a href=\"https://github.com/porokoro/paperboy\">links</a> as well."
+            }
+        ]
+    },
+    {
         "name": "2.0.0",
         "items": [
             {

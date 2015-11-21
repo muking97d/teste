@@ -1,21 +1,8 @@
-apply plugin: 'signing'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.github.porokoro.paperboy'
 version = android.defaultConfig.versionName
-
-def isReleaseBuild() {
-    return android.defaultConfig.versionName.contains("SNAPSHOT") == false
-}
-
-def getNexusUsername() {
-    return hasProperty('nexus.username') ? getProperty('nexus.username') : ''
-}
-
-def getNexusPassword() {
-    return hasProperty('nexus.password') ? getProperty('nexus.password') : ''
-}
 
 def getBintrayUsername() {
     return hasProperty('bintray.username') ? getProperty('bintray.username') : ''
@@ -25,7 +12,6 @@ def getBintrayKey() {
     return hasProperty('bintray.key') ? getProperty('bintray.key') : ''
 }
 
-def libraryName = 'Paperboy'
 def libraryDesc = 'A changelog library for Android'
 def siteUrl = 'https://github.com/porokoro/paperboy'
 def gitUrl = 'https://github.com/porokoro/paperboy.git'
@@ -37,62 +23,51 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = libraryName
+        name = project.name
         desc = libraryDesc
         websiteUrl = siteUrl
         issueTrackerUrl = "$siteUrl/issues"
         vcsUrl = gitUrl
         licenses = ['Apache-2.0']
         labels = ['aar', 'android']
+        publicDownloadNumbers = true
 
         version {
             name = android.defaultConfig.versionName
-
-            /*mavenCentralSync {
-                user = getNexusUsername()
-                password = getNexusPassword()
-            }*/
         }
     }
 }
 
-    install {
-        repositories.mavenInstaller {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name project.name
+            packaging 'aar'
+            description libraryDesc
+            url siteUrl
 
-            pom.project {
-                name libraryName
-                packaging 'aar'
-                description libraryDesc
+            scm {
                 url siteUrl
+                connection gitUrl
+                developerConnection gitUrl
+            }
 
-                scm {
-                    url siteUrl
-                    connection "scm:git:$gitUrl"
-                    developerConnection "scm:git:$gitUrl"
+            licenses {
+                license {
+                    name 'The Apache License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                 }
+            }
 
-                licenses {
-                    license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'porokoro'
-                        name 'Dominik Hibbeln'
-                    }
+            developers {
+                developer {
+                    id 'porokoro'
+                    name 'Dominik Hibbeln'
                 }
             }
         }
     }
-
-    signing {
-        required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
-        sign configurations.archives
-    }
+}
 
 afterEvaluate { project ->
     android.libraryVariants.all { variant ->

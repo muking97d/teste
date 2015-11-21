@@ -19,3 +19,7 @@
 ### Kotlin
 
 -dontwarn kotlin.dom.*
+
+### Google Design Library 23.1.0 Bug
+
+-keep class android.support.v7.widget.LinearLayoutManager { *; }

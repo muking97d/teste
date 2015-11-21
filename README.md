@@ -1,10 +1,8 @@
 Paperboy
 ========
 
-[![License](https://img.shields.io/github/license/porokoro/paperboy.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Tag](https://img.shields.io/github/tag/porokoro/paperboy.svg)](https://github.com/porokoro/paperboy/tags)
-[![Bintray](https://img.shields.io/bintray/v/porokoro/maven/paperboy.svg)](https://bintray.com/porokoro/maven/paperboy)
-[![Travis](https://img.shields.io/travis/porokoro/paperboy/develop.svg)](https://travis-ci.org/porokoro/paperboy)
+[![Download](https://api.bintray.com/packages/porokoro/maven/paperboy/images/download.svg)](https://bintray.com/porokoro/maven/paperboy/_latestVersion)
+[![Build Status](https://travis-ci.org/porokoro/paperboy.svg?branch=develop)](https://travis-ci.org/porokoro/paperboy)
 
 A changelog library for Android
 
@@ -18,16 +16,20 @@ Download
 
 Grab via Gradle:
 ```groovy
-compile 'com.github.porokoro.paperboy:paperboy:2.0.1'
+compile 'com.github.porokoro.paperboy:paperboy:2.1.0'
 ```
 or Maven:
 ```xml
 <dependency>
     <groupId>com.github.porokoro.paperboy</groupId>
     <artifactId>paperboy</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
 </dependency>
 ```
+
+**Note**: If not already done so, add the JCenter Repository to your build
+script. This library is not getting published or synced to Maven Central
+anymore.
 
 Usage
 -----
@@ -116,7 +118,7 @@ License
 -------
 
 ```
-Copyright 2015 porokoro
+Copyright (C) 2015 porokoro
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

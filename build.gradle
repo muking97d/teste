@@ -22,5 +22,5 @@ subprojects {
 }
 
 task clean(type: Delete, group: 'build') {
-    delete 'build/'
+    delete rootProject.buildDir
 }
