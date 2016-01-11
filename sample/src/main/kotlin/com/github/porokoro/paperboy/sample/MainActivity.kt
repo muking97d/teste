@@ -66,7 +66,7 @@ public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                             colorRes = R.color.item_type_custom
                             titleSingularRes = R.string.item_type_custom
                             titlePluralRes = R.string.item_type_customs
-                            icon = R.drawable.ic_build
+                            icon = R.drawable.ic_build_black_24dp
                             sortOrder = 0
                         }
                 )
@@ -120,7 +120,7 @@ public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                         colorRes = R.color.item_type_custom
                         titleSingularRes = R.string.item_type_custom
                         titlePluralRes = R.string.item_type_customs
-                        icon = R.drawable.ic_build
+                        icon = R.drawable.ic_build_black_24dp
                         sortOrder = 0
                     }
             )

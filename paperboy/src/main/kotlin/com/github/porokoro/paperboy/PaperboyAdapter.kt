@@ -123,7 +123,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int): Unit = when (holder) {
         is ViewHolderSection -> {
-            val data = dataset.get(position).data as PaperboySection
+            val data = dataset[position].data as PaperboySection
 
             if (holder.name == null)
                 Log.w(TAG, "View id 'R.id.name' missing in custom layout")
@@ -131,7 +131,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
                 holder.name.text = data.name
         }
         is ViewHolderType -> {
-            val data = dataset.get(position).data as ItemType?
+            val data = dataset[position].data as ItemType?
 
             if (holder.name == null)
                 Log.w(TAG, "View id 'R.id.name' missing in custom layout")
@@ -146,7 +146,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
             }
         }
         is ViewHolderItemNone -> {
-            val data = dataset.get(position).data as PaperboyItem
+            val data = dataset[position].data as PaperboyItem
 
             if (holder.title == null)
                 Log.w(TAG, "View id 'R.id.title' missing in custom layout")
@@ -154,7 +154,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
                 holder.title.htmlText = data.title
         }
         is ViewHolderItemLabel -> {
-            val data = dataset.get(position).data as PaperboyItem
+            val data = dataset[position].data as PaperboyItem
             val definition = config.itemTypes.get(data.type)
 
             if (holder.type == null)
@@ -176,7 +176,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
                 holder.title.htmlText = data.title
         }
         is ViewHolderItemIcon -> {
-            val data = dataset.get(position).data as PaperboyItem
+            val data = dataset[position].data as PaperboyItem
             val definition = config.itemTypes.get(data.type)
 
             if (holder.type == null)
@@ -196,11 +196,14 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
             else
                 holder.title.htmlText = data.title
         }
+        else -> {
+            Log.e(TAG, "Unknown view holder ${holder?.javaClass?.name}")
+        }
     }
 
-    override fun getItemViewType(position: Int) = dataset.get(position).type
+    override fun getItemViewType(position: Int) = dataset[position].type
 
-    override fun getItemCount() = dataset.size()
+    override fun getItemCount() = dataset.size
 
     private fun getColor(definition: ItemType?): Int {
         val color = definition?.color ?: 0
@@ -218,11 +221,11 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
         get() = text
         set(value) {
             val spanned = Html.fromHtml(value.toString())
-            val spans = spanned?.getSpans(0, spanned.length(), ClickableSpan::class.java)
+            val spans = spanned?.getSpans(0, spanned.length, ClickableSpan::class.java)
 
             text = spanned
 
-            if (spans != null && spans.size() > 0) {
+            if (spans != null && spans.size > 0) {
                 movementMethod = LinkMovementMethod.getInstance()
 
                 if (this !is TouchDispatchingTextView)

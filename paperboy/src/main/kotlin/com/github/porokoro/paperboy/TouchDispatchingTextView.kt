@@ -26,7 +26,7 @@ import android.view.ViewGroup
  * dispatched to support clickable [AppCompatTextView]s and [ViewGroup]s with animated backgrounds at the
  * same time.
  */
-public class TouchDispatchingTextView : AppCompatTextView {
+class TouchDispatchingTextView : AppCompatTextView {
     constructor(context: Context?) : super(context)
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)

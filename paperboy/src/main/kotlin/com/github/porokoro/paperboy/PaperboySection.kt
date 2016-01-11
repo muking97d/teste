@@ -15,7 +15,6 @@
  */
 package com.github.porokoro.paperboy
 
-internal class PaperboySection() {
-    var name = ""
-    var items = listOf<PaperboyItem>()
-}
+data class PaperboySection(
+        var name: String = "",
+        var items: List<PaperboyItem> = listOf<PaperboyItem>())

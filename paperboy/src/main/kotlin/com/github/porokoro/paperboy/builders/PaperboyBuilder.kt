@@ -20,7 +20,7 @@ import android.os.Bundle
 import android.util.SparseArray
 import com.github.porokoro.paperboy.*
 
-public fun buildPaperboy(context: Context, func: PaperboyBuilder.() -> Unit): PaperboyFragment {
+fun buildPaperboy(context: Context, func: PaperboyBuilder.() -> Unit): PaperboyFragment {
     val config = PaperboyConfiguration()
     val builder = PaperboyBuilder()
     builder.func()
@@ -33,7 +33,7 @@ public fun buildPaperboy(context: Context, func: PaperboyBuilder.() -> Unit): Pa
     config.itemLayout = builder.itemLayout
     config.sortItems = builder.sortItems
     config.itemTypes = builder.itemTypes.let {
-        val sparseArray = SparseArray<ItemType>(it.size())
+        val sparseArray = SparseArray<ItemType>(it.size)
         it.forEach { sparseArray.put(it.id, it) }
         sparseArray
     }
@@ -61,7 +61,7 @@ public fun buildPaperboy(context: Context, func: PaperboyBuilder.() -> Unit): Pa
     return fragment
 }
 
-public class PaperboyBuilder {
+class PaperboyBuilder {
     var file: String? = null
     var fileRes = 0
     var viewType = 0

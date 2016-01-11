@@ -15,10 +15,12 @@
  */
 package com.github.porokoro.paperboy
 
-internal class ItemType(var id: Int = 0, var name: String = "", var shorthand: String = "") {
-    var titleSingular = ""
-    var titlePlural = ""
-    var color = 0
-    var icon = 0
-    var sortOrder = Int.MAX_VALUE
-}
+data class ItemType(
+        var id: Int = 0,
+        var name: String = "",
+        var shorthand: String = "",
+        var titleSingular: String = "",
+        var titlePlural: String = "",
+        var color: Int = 0,
+        var icon: Int = 0,
+        var sortOrder: Int = Int.MAX_VALUE)

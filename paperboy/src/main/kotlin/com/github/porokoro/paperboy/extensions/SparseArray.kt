@@ -19,10 +19,6 @@ import android.util.SparseArray
 
 internal operator fun <T> SparseArray<T>.iterator() = SparseArrayIterator(this)
 
-internal inline fun <T> SparseArray<T>.forEach(operation: (Pair<Int, T>) -> Unit) {
-    for (element in this) operation(element)
-}
-
 internal inline fun <T> SparseArray<T>.firstOrNull(predicate: (Pair<Int, T>) -> Boolean): Pair<Int, T>? {
     for (element in this) if (predicate(element)) return element
     return null

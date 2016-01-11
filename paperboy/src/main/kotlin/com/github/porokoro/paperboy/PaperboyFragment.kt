@@ -23,7 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-public class PaperboyFragment : Fragment(), JsonDataLoader.Callback {
+class PaperboyFragment : Fragment(), JsonDataLoader.Callback {
     companion object {
         val ARG_CONFIG = "configuration"
     }

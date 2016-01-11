@@ -15,8 +15,7 @@
  */
 package com.github.porokoro.paperboy
 
-internal class PaperboyItem() {
-    var type = DefaultItemTypes.NONE
-    var title = ""
-    var description = ""
-}
+data class PaperboyItem(
+        var type: Int = DefaultItemTypes.NONE,
+        var title: String = "",
+        var description: String = "")

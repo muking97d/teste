@@ -19,8 +19,8 @@ import android.content.Context
 import android.support.v4.content.ContextCompat
 import com.github.porokoro.paperboy.ItemType
 
-public fun buildItemType(context: Context, id: Int, name: String, shorthand: String,
-                         func: ItemTypeBuilder.() -> Unit): ItemType {
+fun buildItemType(context: Context, id: Int, name: String, shorthand: String,
+                  func: ItemTypeBuilder.() -> Unit): ItemType {
     val itemType = ItemType(id, name, shorthand)
     val builder = ItemTypeBuilder()
     builder.func()
@@ -42,7 +42,7 @@ public fun buildItemType(context: Context, id: Int, name: String, shorthand: Str
     return itemType
 }
 
-public class ItemTypeBuilder {
+class ItemTypeBuilder {
     var titleSingular = ""
     var titleSingularRes = 0
     var titlePlural = ""

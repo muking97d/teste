@@ -15,7 +15,7 @@
  */
 package com.github.porokoro.paperboy
 
-public object ViewTypes {
+object ViewTypes {
     val NONE = 1
     val ICON = 2
     val LABEL = 3
