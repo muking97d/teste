@@ -17,3 +17,7 @@
 #}
 
 -dontwarn org.jetbrains.anko.ContextUtilsKt
+
+-repackageclasses 'com.github.porokoro.paperboy.sample'
+-renamesourcefileattribute SourceFile
+-allowaccessmodification
