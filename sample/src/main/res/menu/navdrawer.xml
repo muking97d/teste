@@ -121,4 +121,22 @@
 
     </group>
 
+    <item
+            android:title="@string/group_java"
+            android:enabled="false"/>
+
+    <group
+            android:id="@+id/group_java"
+            android:checkableBehavior="none">
+
+        <item
+                android:id="@+id/section_java_default"
+                android:title="@string/section_java_default"/>
+
+        <item
+                android:id="@+id/section_java_custom"
+                android:title="@string/section_java_custom"/>
+
+    </group>
+
 </menu>

@@ -21,11 +21,12 @@ import android.support.design.widget.NavigationView
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.github.porokoro.paperboy.ViewTypes
 import com.github.porokoro.paperboy.builders.buildItemType
 import com.github.porokoro.paperboy.builders.buildPaperboy
+import org.jetbrains.anko.find
+import org.jetbrains.anko.startActivity
 import kotlin.properties.Delegates
 
 public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -42,15 +43,15 @@ public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar) as Toolbar)
+        setSupportActionBar(find(R.id.toolbar))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
-        drawerNavigation = findViewById(R.id.drawer_navigation) as NavigationView
+        drawerLayout = find(R.id.drawer_layout)
+        drawerNavigation = find(R.id.drawer_navigation)
 
-        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, findViewById(R.id.toolbar) as Toolbar,
+        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, find(R.id.toolbar),
                 R.string.navdrawer_open, R.string.navdrawer_close)
         drawerLayout.setDrawerListener(drawerToggle)
         drawerNavigation.setNavigationItemSelectedListener(this)
@@ -102,6 +103,8 @@ public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             R.id.section_custom_item_custom -> itemLayout = R.layout.view_item_custom
             R.id.section_sort_none -> sort = false
             R.id.section_sort_items -> sort = true
+            R.id.section_java_default -> startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_CUSTOM to false)
+            R.id.section_java_custom -> startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_CUSTOM to true)
         }
 
         onSectionSelected()
