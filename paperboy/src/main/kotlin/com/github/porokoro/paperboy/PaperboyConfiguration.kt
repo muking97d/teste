@@ -17,13 +17,12 @@ package com.github.porokoro.paperboy
 
 import android.util.SparseArray
 
-internal class PaperboyConfiguration() {
-    var file: String? = ""
-    var fileRes = 0
-    var viewType = ViewTypes.NONE
-    var sectionLayout = 0
-    var typeLayout = 0
-    var itemLayout = 0
-    var sortItems = false
-    var itemTypes = SparseArray<ItemType>()
-}
+internal data class PaperboyConfiguration(
+        var file: String? = "",
+        var fileRes: Int = 0,
+        var viewType: Int = ViewTypes.NONE,
+        var sectionLayout: Int = 0,
+        var typeLayout: Int = 0,
+        var itemLayout: Int = 0,
+        var sortItems: Boolean = false,
+        var itemTypes: SparseArray<ItemType> = SparseArray())

@@ -21,7 +21,11 @@ import org.jetbrains.anko.find
 
 class JavaSampleActivity : AppCompatActivity() {
     companion object {
-        val ARG_CUSTOM = "custom"
+        val SAMPLE1_DEFAULT = 1
+        val SAMPLE1_CUSTOM = 2
+        val SAMPLE2_DEFAULT = 3
+        val SAMPLE2_CUSTOM = 4
+        val ARG_SAMPLE = "sample"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +35,12 @@ class JavaSampleActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .add(R.id.content, when (intent?.getBooleanExtra(ARG_CUSTOM, false) ?: false) {
-                        true -> JavaSample.buildCustom(this)
-                        false -> JavaSample.buildDefault(this)
+                    .add(R.id.content, when (intent?.getIntExtra(ARG_SAMPLE, 0)) {
+                        SAMPLE1_DEFAULT -> JavaSample.buildDefault(this)
+                        SAMPLE1_CUSTOM -> JavaSample.buildCustom(this)
+                        SAMPLE2_DEFAULT -> JavaSample2.buildDefault(this)
+                        SAMPLE2_CUSTOM -> JavaSample2.buildCustom(this)
+                        else -> throw Exception()
                     })
                     .commit()
         }

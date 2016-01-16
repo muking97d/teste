@@ -16,10 +16,10 @@
 package com.github.porokoro.paperboy
 
 object ViewTypes {
-    val NONE = 1
-    val ICON = 2
-    val LABEL = 3
-    val HEADER = 4
+    const val NONE = 1
+    const val ICON = 2
+    const val LABEL = 3
+    const val HEADER = 4
 
     fun fromValue(value: Int) = when (value) {
         ICON, LABEL, HEADER -> value

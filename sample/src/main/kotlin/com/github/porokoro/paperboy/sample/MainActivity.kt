@@ -103,8 +103,14 @@ public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             R.id.section_custom_item_custom -> itemLayout = R.layout.view_item_custom
             R.id.section_sort_none -> sort = false
             R.id.section_sort_items -> sort = true
-            R.id.section_java_default -> startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_CUSTOM to false)
-            R.id.section_java_custom -> startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_CUSTOM to true)
+            R.id.section_java_default ->
+                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_DEFAULT)
+            R.id.section_java_custom ->
+                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_CUSTOM)
+            R.id.section_java2_default ->
+                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_DEFAULT)
+            R.id.section_java2_custom ->
+                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_CUSTOM)
         }
 
         onSectionSelected()

@@ -3,7 +3,7 @@ def versionMinor = 1
 def versionPatch = 0
 def versionBuild = 0
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
@@ -11,11 +11,11 @@ android {
     buildToolsVersion '23.0.2'
 
     defaultConfig {
-        applicationId 'com.github.porokoro.paperboy.sample'
         minSdkVersion 13
         targetSdkVersion 23
         versionCode versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        consumerProguardFiles 'proguard-rules.pro'
     }
 
     sourceSets.all { set ->
@@ -24,9 +24,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -37,12 +36,11 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:support-annotations:23.1.1'
 
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4584'
-    compile 'org.jetbrains.anko:anko-common:0.8.1'
 
     compile project(':paperboy')
-    compile project(':paperboy-java')
 }
+
+apply from: 'bintray.gradle'

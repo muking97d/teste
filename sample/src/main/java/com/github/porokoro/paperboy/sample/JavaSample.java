@@ -49,7 +49,7 @@ class JavaSample {
         return PaperboyBuilderKt.buildPaperboy(context, new Function1<PaperboyBuilder, Unit>() {
             @Override
             public Unit invoke(PaperboyBuilder paperboyBuilder) {
-                paperboyBuilder.setViewType(ViewTypes.INSTANCE.getHEADER());
+                paperboyBuilder.setViewType(ViewTypes.HEADER);
                 paperboyBuilder.setSectionLayout(R.layout.view_section_custom);
                 paperboyBuilder.setTypeLayout(R.layout.view_type_custom);
                 paperboyBuilder.setItemLayout(R.layout.view_item_custom);

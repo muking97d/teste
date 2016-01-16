@@ -137,6 +137,14 @@
                 android:id="@+id/section_java_custom"
                 android:title="@string/section_java_custom"/>
 
+        <item
+                android:id="@+id/section_java2_default"
+                android:title="@string/section_java2_default"/>
+
+        <item
+                android:id="@+id/section_java2_custom"
+                android:title="@string/section_java2_custom"/>
+
     </group>
 
 </menu>

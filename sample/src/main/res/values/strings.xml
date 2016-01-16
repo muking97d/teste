@@ -45,6 +45,8 @@
     <string name="group_java">Java samples</string>
     <string name="section_java_default">Java default</string>
     <string name="section_java_custom">Java customized</string>
+    <string name="section_java2_default">Java 2 default</string>
+    <string name="section_java2_custom">Java 2 customized</string>
 
     <string name="item_type_custom">Custom</string>
     <string name="item_type_customs">Custom ones</string>
