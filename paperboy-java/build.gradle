@@ -38,7 +38,7 @@ android {
 dependencies {
     compile 'com.android.support:support-annotations:23.1.1'
 
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4584'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4589'
 
     compile project(':paperboy')
 }
