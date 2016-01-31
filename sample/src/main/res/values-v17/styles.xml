@@ -16,15 +16,9 @@
   -->
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#009688</item>
-        <item name="colorPrimaryDark">#00796B</item>
-        <item name="colorAccent">#F50057</item>
-        <item name="preferenceTheme">@style/NavigationThemeOverlay</item>
-    </style>
-
     <style name="NavigationThemeOverlay" parent="PreferenceThemeOverlay">
         <item name="android:textAppearanceLarge">?android:attr/textAppearanceMedium</item>
+        <item name="preferenceFragmentListStyle">@style/PreferenceFragment</item>
     </style>
 
 </resources>

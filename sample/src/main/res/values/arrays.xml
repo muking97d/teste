@@ -16,15 +16,18 @@
   -->
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#009688</item>
-        <item name="colorPrimaryDark">#00796B</item>
-        <item name="colorAccent">#F50057</item>
-        <item name="preferenceTheme">@style/NavigationThemeOverlay</item>
-    </style>
+    <string-array name="pref_view_types_entries">
+        <item>@string/section_none</item>
+        <item>@string/section_labels</item>
+        <item>@string/section_icons</item>
+        <item>@string/section_headers</item>
+    </string-array>
 
-    <style name="NavigationThemeOverlay" parent="PreferenceThemeOverlay">
-        <item name="android:textAppearanceLarge">?android:attr/textAppearanceMedium</item>
-    </style>
+    <string-array name="pref_view_types_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
 </resources>

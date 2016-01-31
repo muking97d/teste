@@ -17,6 +17,7 @@ package com.github.porokoro.paperboy.sample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import org.jetbrains.anko.find
 
 class JavaSampleActivity : AppCompatActivity() {
@@ -33,6 +34,9 @@ class JavaSampleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_java_sample)
         setSupportActionBar(find(R.id.toolbar))
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                     .add(R.id.content, when (intent?.getIntExtra(ARG_SAMPLE, 0)) {
@@ -45,4 +49,13 @@ class JavaSampleActivity : AppCompatActivity() {
                     .commit()
         }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?) =
+            when (item?.itemId) {
+                android.R.id.home -> {
+                    finish()
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
 }

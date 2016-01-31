@@ -15,30 +15,25 @@
  */
 package com.github.porokoro.paperboy.sample
 
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.MenuItem
+import android.widget.FrameLayout
 import com.github.porokoro.paperboy.ViewTypes
 import com.github.porokoro.paperboy.builders.buildItemType
 import com.github.porokoro.paperboy.builders.buildPaperboy
+import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
 import kotlin.properties.Delegates
 
-public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private var drawerLayout by Delegates.notNull<DrawerLayout>()
-    private var drawerNavigation by Delegates.notNull<NavigationView>()
+    private var drawerNavigation by Delegates.notNull<FrameLayout>()
     private var drawerToggle by Delegates.notNull<ActionBarDrawerToggle>()
-
-    private var viewType = ViewTypes.NONE
-    private var sectionLayout = 0
-    private var typeLayout = 0
-    private var itemLayout = 0
-    private var sort = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +49,9 @@ public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         drawerToggle = ActionBarDrawerToggle(this, drawerLayout, find(R.id.toolbar),
                 R.string.navdrawer_open, R.string.navdrawer_close)
         drawerLayout.setDrawerListener(drawerToggle)
-        drawerNavigation.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
             val fragment = buildPaperboy(this) {
-                viewType = this@MainActivity.viewType
-                sectionLayout = this@MainActivity.sectionLayout
-                typeLayout = this@MainActivity.typeLayout
-                itemLayout = this@MainActivity.itemLayout
                 itemTypes = listOf(
                         buildItemType(this@MainActivity, 1000, "Custom", "c") {
                             colorRes = R.color.item_type_custom
@@ -73,10 +63,27 @@ public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                 )
             }
 
+            val settings = SettingsFragment() {
+                when (it.key) {
+                    "pref_java_default" ->
+                        startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_DEFAULT)
+                    "pref_java_custom" ->
+                        startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_CUSTOM)
+                    "pref_java2_default" ->
+                        startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_DEFAULT)
+                    "pref_java2_custom" ->
+                        startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_CUSTOM)
+                }
+                true
+            }
+
             supportFragmentManager.beginTransaction()
                     .add(R.id.content, fragment)
+                    .add(R.id.drawer_navigation, settings)
                     .commit()
         }
+
+        onSharedPreferenceChanged(defaultSharedPreferences, null)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -89,41 +96,33 @@ public class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         drawerToggle.onConfigurationChanged(newConfig)
     }
 
-    override fun onNavigationItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.section_view_type_none -> viewType = ViewTypes.NONE
-            R.id.section_view_type_labels -> viewType = ViewTypes.LABEL
-            R.id.section_view_type_icons -> viewType = ViewTypes.ICON
-            R.id.section_view_type_headers -> viewType = ViewTypes.HEADER
-            R.id.section_custom_section_default -> sectionLayout = 0
-            R.id.section_custom_section_custom -> sectionLayout = R.layout.view_section_custom
-            R.id.section_custom_type_default -> typeLayout = 0
-            R.id.section_custom_type_custom -> typeLayout = R.layout.view_type_custom
-            R.id.section_custom_item_default -> itemLayout = 0
-            R.id.section_custom_item_custom -> itemLayout = R.layout.view_item_custom
-            R.id.section_sort_none -> sort = false
-            R.id.section_sort_items -> sort = true
-            R.id.section_java_default ->
-                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_DEFAULT)
-            R.id.section_java_custom ->
-                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_CUSTOM)
-            R.id.section_java2_default ->
-                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_DEFAULT)
-            R.id.section_java2_custom ->
-                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_CUSTOM)
-        }
-
-        onSectionSelected()
-        return true;
+    override fun onResume() {
+        super.onResume()
+        defaultSharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
-    private fun onSectionSelected() {
+    override fun onPause() {
+        super.onPause()
+        defaultSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (sharedPreferences == null) return
+
         val fragment = buildPaperboy(this) {
-            viewType = this@MainActivity.viewType
-            sectionLayout = this@MainActivity.sectionLayout
-            typeLayout = this@MainActivity.typeLayout
-            itemLayout = this@MainActivity.itemLayout
-            sortItems = this@MainActivity.sort
+            viewType = when (sharedPreferences.getString("pref_view_types", "1")) {
+                "2" -> ViewTypes.LABEL
+                "3" -> ViewTypes.ICON
+                "4" -> ViewTypes.HEADER
+                else -> ViewTypes.NONE
+            }
+            sectionLayout = if (sharedPreferences.getBoolean("pref_custom_section", false))
+                R.layout.view_section_custom else 0
+            typeLayout = if (sharedPreferences.getBoolean("pref_custom_type", false))
+                R.layout.view_type_custom else 0
+            itemLayout = if (sharedPreferences.getBoolean("pref_custom_item", false))
+                R.layout.view_item_custom else 0
+            sortItems = sharedPreferences.getBoolean("pref_sort", false)
             itemTypes = listOf(
                     buildItemType(this@MainActivity, 1000, "Custom", "c") {
                         colorRes = R.color.item_type_custom

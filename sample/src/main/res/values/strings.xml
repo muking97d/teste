@@ -53,4 +53,6 @@
 
     <string name="item_custom_emoji">\u2605</string>
 
+    <string name="pref_view_types_default">1</string>
+
 </resources>
