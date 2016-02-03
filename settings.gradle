@@ -15,4 +15,4 @@
  */
 rootProject.name = 'paperboy-root'
 
-include ':paperboy', ':paperboy-java', ':sample'
+include ':paperboy', ':sample'

@@ -60,5 +60,4 @@ dependencies {
     compile 'org.jetbrains.anko:anko-common:0.8.1'
 
     compile project(':paperboy')
-    compile project(':paperboy-java')
 }

@@ -16,6 +16,7 @@
 package com.github.porokoro.paperboy.builders
 
 import android.content.Context
+import android.support.annotation.*
 import android.support.v4.content.ContextCompat
 import com.github.porokoro.paperboy.ItemType
 
@@ -25,6 +26,10 @@ fun buildItemType(context: Context, id: Int, name: String, shorthand: String,
     val builder = ItemTypeBuilder()
     builder.func()
 
+    return build(context, itemType, builder)
+}
+
+private fun build(context: Context, itemType: ItemType, builder: ItemTypeBuilder): ItemType {
     itemType.titleSingular =
             if (builder.titleSingularRes > 0) context.getString(builder.titleSingularRes)
             else builder.titleSingular
@@ -52,4 +57,60 @@ class ItemTypeBuilder {
     var icon = 0
     var sortOrder = 0
     var sortOrderRes = 0
+}
+
+class ItemTypeChainBuilder(private val context: Context, private val id: Int, private val  name: String,
+                           private val  shorthand: String) {
+    constructor(context: Context, id: Int, @StringRes name: Int, @StringRes shorthand: Int)
+    : this(context, id, context.getString(name), context.getString(shorthand))
+
+    private val builder = ItemTypeBuilder()
+
+
+    fun setTitleSingular(title: String): ItemTypeChainBuilder {
+        builder.titleSingular = title
+        return this
+    }
+
+    fun setTitleSingular(@StringRes title: Int): ItemTypeChainBuilder {
+        builder.titleSingularRes = title
+        return this
+    }
+
+    fun setTitlePlural(title: String): ItemTypeChainBuilder {
+        builder.titlePlural = title
+        return this
+    }
+
+    fun setTitlePlural(@StringRes title: Int): ItemTypeChainBuilder {
+        builder.titlePluralRes = title
+        return this
+    }
+
+    fun setColor(@ColorInt color: Int): ItemTypeChainBuilder {
+        builder.color = color
+        return this
+    }
+
+    fun setColorRes(@ColorRes color: Int): ItemTypeChainBuilder {
+        builder.colorRes = color
+        return this
+    }
+
+    fun setIcon(@DrawableRes icon: Int): ItemTypeChainBuilder {
+        builder.icon = icon
+        return this
+    }
+
+    fun setSortOrder(sortOrder: Int): ItemTypeChainBuilder {
+        builder.sortOrder = sortOrder
+        return this
+    }
+
+    fun setSortOrderRes(@IntegerRes sortOrder: Int): ItemTypeChainBuilder {
+        builder.sortOrderRes = sortOrder
+        return this
+    }
+
+    fun build() = build(context, ItemType(id, name, shorthand), builder)
 }

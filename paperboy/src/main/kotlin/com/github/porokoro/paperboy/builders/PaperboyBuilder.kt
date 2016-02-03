@@ -17,14 +17,20 @@ package com.github.porokoro.paperboy.builders
 
 import android.content.Context
 import android.os.Bundle
+import android.support.annotation.LayoutRes
+import android.support.annotation.RawRes
 import android.util.SparseArray
 import com.github.porokoro.paperboy.*
 
 fun buildPaperboy(context: Context, func: PaperboyBuilder.() -> Unit): PaperboyFragment {
-    val config = PaperboyConfiguration()
     val builder = PaperboyBuilder()
     builder.func()
 
+    return build(context, builder)
+}
+
+private fun build(context: Context, builder: PaperboyBuilder): PaperboyFragment {
+    val config = PaperboyConfiguration()
     config.file = if (builder.fileRes > 0) null else builder.file
     config.fileRes = builder.fileRes
     config.viewType = builder.viewType
@@ -71,3 +77,50 @@ class PaperboyBuilder {
     var sortItems = false
     var itemTypes = listOf<ItemType>()
 }
+
+class PaperboyChainBuilder(private val context: Context) {
+    private val builder = PaperboyBuilder()
+
+    fun setFile(file: String?): PaperboyChainBuilder {
+        builder.file = file
+        return this
+    }
+
+    fun setFileRes(@RawRes fileRes: Int): PaperboyChainBuilder {
+        builder.fileRes = fileRes
+        return this
+    }
+
+    fun setViewType(viewType: Int): PaperboyChainBuilder {
+        builder.viewType = viewType
+        return this
+    }
+
+    fun setSectionLayout(@LayoutRes sectionLayout: Int): PaperboyChainBuilder {
+        builder.sectionLayout = sectionLayout
+        return this
+    }
+
+    fun setTypeLayout(@LayoutRes typeLayout: Int): PaperboyChainBuilder {
+        builder.typeLayout = typeLayout
+        return this;
+    }
+
+    fun setItemLayout(@LayoutRes itemLayout: Int): PaperboyChainBuilder {
+        builder.itemLayout = itemLayout
+        return this;
+    }
+
+    fun setSortItems(sortItems: Boolean): PaperboyChainBuilder {
+        builder.sortItems = sortItems
+        return this;
+    }
+
+    fun addItemType(itemType: ItemType): PaperboyChainBuilder {
+        builder.itemTypes = builder.itemTypes + itemType
+        return this;
+    }
+
+    fun buildFragment() = build(context, builder)
+}
+

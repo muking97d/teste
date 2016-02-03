@@ -18,8 +18,8 @@ package com.github.porokoro.paperboy.sample;
 import android.content.Context;
 import com.github.porokoro.paperboy.PaperboyFragment;
 import com.github.porokoro.paperboy.ViewTypes;
-import com.github.porokoro.paperboy.java.JavaItemTypeBuilder;
-import com.github.porokoro.paperboy.java.JavaPaperboyBuilder;
+import com.github.porokoro.paperboy.builders.ItemTypeChainBuilder;
+import com.github.porokoro.paperboy.builders.PaperboyChainBuilder;
 import org.jetbrains.annotations.NotNull;
 
 class JavaSample2 {
@@ -28,18 +28,18 @@ class JavaSample2 {
 
     @NotNull
     static PaperboyFragment buildDefault(@NotNull Context context) {
-        return new JavaPaperboyBuilder(context).buildFragment();
+        return new PaperboyChainBuilder(context).buildFragment();
     }
 
     @NotNull
     static PaperboyFragment buildCustom(@NotNull Context context) {
-        return new JavaPaperboyBuilder(context)
+        return new PaperboyChainBuilder(context)
                 .setViewType(ViewTypes.HEADER)
                 .setSectionLayout(R.layout.view_section_custom)
                 .setTypeLayout(R.layout.view_type_custom)
                 .setItemLayout(R.layout.view_item_custom)
                 .setSortItems(true)
-                .addItemType(new JavaItemTypeBuilder(context, 1000, "Custom", "C")
+                .addItemType(new ItemTypeChainBuilder(context, 1000, "Custom", "C")
                         .setColorRes(R.color.item_type_custom)
                         .setTitleSingular(R.string.item_type_custom)
                         .setTitlePlural(R.string.item_type_customs)
@@ -48,6 +48,4 @@ class JavaSample2 {
                         .build())
                 .buildFragment();
     }
-
-
 }
