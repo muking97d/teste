@@ -21,3 +21,7 @@
 -repackageclasses 'com.github.porokoro.paperboy.sample'
 -renamesourcefileattribute SourceFile
 -allowaccessmodification
+
+### Temporary for Kotlin 1.0.0-rc-1036
+
+-dontwarn kotlin.**

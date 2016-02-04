@@ -121,83 +121,85 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
         else -> null
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int): Unit = when (holder) {
-        is ViewHolderSection -> {
-            val data = dataset[position].data as PaperboySection
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int): Unit {
+        when (holder) {
+            is ViewHolderSection -> {
+                val data = dataset[position].data as PaperboySection
 
-            if (holder.name == null)
-                Log.w(TAG, "View id 'R.id.name' missing in custom layout")
-            else
-                holder.name.text = data.name
-        }
-        is ViewHolderType -> {
-            val data = dataset[position].data as ItemType?
+                if (holder.name == null)
+                    Log.w(TAG, "View id 'R.id.name' missing in custom layout")
+                else
+                    holder.name.text = data.name
+            }
+            is ViewHolderType -> {
+                val data = dataset[position].data as ItemType?
 
-            if (holder.name == null)
-                Log.w(TAG, "View id 'R.id.name' missing in custom layout")
-            else {
-                if (data == null)
-                    holder.name.visibility = View.GONE
+                if (holder.name == null)
+                    Log.w(TAG, "View id 'R.id.name' missing in custom layout")
                 else {
-                    holder.name.visibility = View.VISIBLE
-                    holder.name.text = data.titlePlural
-                    holder.name.setTextColor(data.color)
+                    if (data == null)
+                        holder.name.visibility = View.GONE
+                    else {
+                        holder.name.visibility = View.VISIBLE
+                        holder.name.text = data.titlePlural
+                        holder.name.setTextColor(data.color)
+                    }
                 }
             }
-        }
-        is ViewHolderItemNone -> {
-            val data = dataset[position].data as PaperboyItem
+            is ViewHolderItemNone -> {
+                val data = dataset[position].data as PaperboyItem
 
-            if (holder.title == null)
-                Log.w(TAG, "View id 'R.id.title' missing in custom layout")
-            else
-                holder.title.htmlText = data.title
-        }
-        is ViewHolderItemLabel -> {
-            val data = dataset[position].data as PaperboyItem
-            val definition = config.itemTypes.get(data.type)
-
-            if (holder.type == null)
-                Log.w(TAG, "View id 'R.id.type' missing in custom layout")
-            else {
-                if (definition == null)
-                    holder.type.visibility = View.GONE
-                else {
-                    holder.type.visibility = View.VISIBLE
-                    holder.type.text = definition.titleSingular
-                    holder.type.setBackgroundResource(R.drawable.paperboy_label_background)
-                    holder.type.background.setColorFilter(getColor(definition), PorterDuff.Mode.SRC_ATOP)
-                }
+                if (holder.title == null)
+                    Log.w(TAG, "View id 'R.id.title' missing in custom layout")
+                else
+                    holder.title.htmlText = data.title
             }
+            is ViewHolderItemLabel -> {
+                val data = dataset[position].data as PaperboyItem
+                val definition = config.itemTypes.get(data.type)
 
-            if (holder.title == null)
-                Log.w(TAG, "View id 'R.id.title' missing in custom layout")
-            else
-                holder.title.htmlText = data.title
-        }
-        is ViewHolderItemIcon -> {
-            val data = dataset[position].data as PaperboyItem
-            val definition = config.itemTypes.get(data.type)
-
-            if (holder.type == null)
-                Log.w(TAG, "View id 'R.id.type' missing in custom layout")
-            else {
-                if (definition == null)
-                    holder.type.visibility = View.GONE
+                if (holder.type == null)
+                    Log.w(TAG, "View id 'R.id.type' missing in custom layout")
                 else {
-                    holder.type.visibility = View.VISIBLE
-                    holder.type.setImageResource(definition.icon)
-                    holder.type.setColorFilter(getColor(definition))
+                    if (definition == null)
+                        holder.type.visibility = View.GONE
+                    else {
+                        holder.type.visibility = View.VISIBLE
+                        holder.type.text = definition.titleSingular
+                        holder.type.setBackgroundResource(R.drawable.paperboy_label_background)
+                        holder.type.background.setColorFilter(getColor(definition), PorterDuff.Mode.SRC_ATOP)
+                    }
                 }
-            }
 
-            if (holder.title == null)
-                Log.w(TAG, "View id 'R.id.title' missing in custom layout")
-            else
-                holder.title.htmlText = data.title
-        }
-        else -> {
-            Log.e(TAG, "Unknown view holder ${holder?.javaClass?.name}")
+                if (holder.title == null)
+                    Log.w(TAG, "View id 'R.id.title' missing in custom layout")
+                else
+                    holder.title.htmlText = data.title
+            }
+            is ViewHolderItemIcon -> {
+                val data = dataset[position].data as PaperboyItem
+                val definition = config.itemTypes.get(data.type)
+
+                if (holder.type == null)
+                    Log.w(TAG, "View id 'R.id.type' missing in custom layout")
+                else {
+                    if (definition == null)
+                        holder.type.visibility = View.GONE
+                    else {
+                        holder.type.visibility = View.VISIBLE
+                        holder.type.setImageResource(definition.icon)
+                        holder.type.setColorFilter(getColor(definition))
+                    }
+                }
+
+                if (holder.title == null)
+                    Log.w(TAG, "View id 'R.id.title' missing in custom layout")
+                else
+                    holder.title.htmlText = data.title
+            }
+            else -> {
+                Log.e(TAG, "Unknown view holder ${holder?.javaClass?.name}")
+            }
         }
     }
 

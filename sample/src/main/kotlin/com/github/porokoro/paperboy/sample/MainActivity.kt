@@ -30,7 +30,7 @@ import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
 import kotlin.properties.Delegates
 
-public class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private var drawerLayout by Delegates.notNull<DrawerLayout>()
     private var drawerNavigation by Delegates.notNull<FrameLayout>()
     private var drawerToggle by Delegates.notNull<ActionBarDrawerToggle>()

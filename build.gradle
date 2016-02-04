@@ -28,7 +28,7 @@ allprojects {
 subprojects {
     buildscript {
         dependencies {
-            classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0-beta-4589'
+            classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0-rc-1036'
             classpath 'com.android.tools.build:gradle:1.5.0'
             classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.5'
             classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
