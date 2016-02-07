@@ -59,58 +59,30 @@ class ItemTypeBuilder {
     var sortOrderRes = 0
 }
 
-class ItemTypeChainBuilder(private val context: Context, private val id: Int, private val  name: String,
-                           private val  shorthand: String) {
+class ItemTypeChainBuilder(private val context: Context, private val id: Int, private val name: String,
+                           private val shorthand: String) {
     constructor(context: Context, id: Int, @StringRes name: Int, @StringRes shorthand: Int)
     : this(context, id, context.getString(name), context.getString(shorthand))
 
     private val builder = ItemTypeBuilder()
 
+    fun titleSingular(title: String) = apply { builder.titleSingular = title }
 
-    fun setTitleSingular(title: String): ItemTypeChainBuilder {
-        builder.titleSingular = title
-        return this
-    }
+    fun titleSingular(@StringRes title: Int) = apply { builder.titleSingularRes = title }
 
-    fun setTitleSingular(@StringRes title: Int): ItemTypeChainBuilder {
-        builder.titleSingularRes = title
-        return this
-    }
+    fun titlePlural(title: String) = apply { builder.titlePlural = title }
 
-    fun setTitlePlural(title: String): ItemTypeChainBuilder {
-        builder.titlePlural = title
-        return this
-    }
+    fun titlePlural(@StringRes title: Int) = apply { builder.titlePluralRes = title }
 
-    fun setTitlePlural(@StringRes title: Int): ItemTypeChainBuilder {
-        builder.titlePluralRes = title
-        return this
-    }
+    fun color(@ColorInt color: Int) = apply { builder.color = color }
 
-    fun setColor(@ColorInt color: Int): ItemTypeChainBuilder {
-        builder.color = color
-        return this
-    }
+    fun colorRes(@ColorRes color: Int) = apply { builder.colorRes = color }
 
-    fun setColorRes(@ColorRes color: Int): ItemTypeChainBuilder {
-        builder.colorRes = color
-        return this
-    }
+    fun icon(@DrawableRes icon: Int) = apply { builder.icon = icon }
 
-    fun setIcon(@DrawableRes icon: Int): ItemTypeChainBuilder {
-        builder.icon = icon
-        return this
-    }
+    fun sortOrder(sortOrder: Int) = apply { builder.sortOrder = sortOrder }
 
-    fun setSortOrder(sortOrder: Int): ItemTypeChainBuilder {
-        builder.sortOrder = sortOrder
-        return this
-    }
-
-    fun setSortOrderRes(@IntegerRes sortOrder: Int): ItemTypeChainBuilder {
-        builder.sortOrderRes = sortOrder
-        return this
-    }
+    fun sortOrderRes(@IntegerRes sortOrder: Int) = apply { builder.sortOrderRes = sortOrder }
 
     fun build() = build(context, ItemType(id, name, shorthand), builder)
 }

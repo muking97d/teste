@@ -34,17 +34,17 @@ class JavaSample2 {
     @NotNull
     static PaperboyFragment buildCustom(@NotNull Context context) {
         return new PaperboyChainBuilder(context)
-                .setViewType(ViewTypes.HEADER)
-                .setSectionLayout(R.layout.view_section_custom)
-                .setTypeLayout(R.layout.view_type_custom)
-                .setItemLayout(R.layout.view_item_custom)
-                .setSortItems(true)
+                .viewType(ViewTypes.HEADER)
+                .sectionLayout(R.layout.view_section_custom)
+                .typeLayout(R.layout.view_type_custom)
+                .itemLayout(R.layout.view_item_custom)
+                .sortItems(true)
                 .addItemType(new ItemTypeChainBuilder(context, 1000, "Custom", "C")
-                        .setColorRes(R.color.item_type_custom)
-                        .setTitleSingular(R.string.item_type_custom)
-                        .setTitlePlural(R.string.item_type_customs)
-                        .setIcon(R.drawable.ic_build_black_24dp)
-                        .setSortOrder(0)
+                        .colorRes(R.color.item_type_custom)
+                        .titleSingular(R.string.item_type_custom)
+                        .titlePlural(R.string.item_type_customs)
+                        .icon(R.drawable.ic_build_black_24dp)
+                        .sortOrder(0)
                         .build())
                 .buildFragment();
     }

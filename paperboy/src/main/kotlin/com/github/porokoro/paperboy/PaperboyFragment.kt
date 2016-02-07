@@ -46,7 +46,7 @@ class PaperboyFragment : Fragment(), JsonDataLoader.Callback {
 
         loadData(config)
 
-        return rootView;
+        return rootView
     }
 
     private fun loadData(config: PaperboyConfiguration) =

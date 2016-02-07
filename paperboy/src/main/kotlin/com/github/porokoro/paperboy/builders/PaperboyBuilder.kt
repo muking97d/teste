@@ -81,45 +81,21 @@ class PaperboyBuilder {
 class PaperboyChainBuilder(private val context: Context) {
     private val builder = PaperboyBuilder()
 
-    fun setFile(file: String?): PaperboyChainBuilder {
-        builder.file = file
-        return this
-    }
+    fun file(file: String?) = apply { builder.file = file }
 
-    fun setFileRes(@RawRes fileRes: Int): PaperboyChainBuilder {
-        builder.fileRes = fileRes
-        return this
-    }
+    fun fileRes(@RawRes fileRes: Int) = apply { builder.fileRes = fileRes }
 
-    fun setViewType(viewType: Int): PaperboyChainBuilder {
-        builder.viewType = viewType
-        return this
-    }
+    fun viewType(viewType: Int) = apply { builder.viewType = viewType }
 
-    fun setSectionLayout(@LayoutRes sectionLayout: Int): PaperboyChainBuilder {
-        builder.sectionLayout = sectionLayout
-        return this
-    }
+    fun sectionLayout(@LayoutRes sectionLayout: Int) = apply { builder.sectionLayout = sectionLayout }
 
-    fun setTypeLayout(@LayoutRes typeLayout: Int): PaperboyChainBuilder {
-        builder.typeLayout = typeLayout
-        return this;
-    }
+    fun typeLayout(@LayoutRes typeLayout: Int) = apply { builder.typeLayout = typeLayout }
 
-    fun setItemLayout(@LayoutRes itemLayout: Int): PaperboyChainBuilder {
-        builder.itemLayout = itemLayout
-        return this;
-    }
+    fun itemLayout(@LayoutRes itemLayout: Int) = apply { builder.itemLayout = itemLayout }
 
-    fun setSortItems(sortItems: Boolean): PaperboyChainBuilder {
-        builder.sortItems = sortItems
-        return this;
-    }
+    fun sortItems(sortItems: Boolean) = apply { builder.sortItems = sortItems }
 
-    fun addItemType(itemType: ItemType): PaperboyChainBuilder {
-        builder.itemTypes = builder.itemTypes + itemType
-        return this;
-    }
+    fun addItemType(itemType: ItemType) = apply { builder.itemTypes = builder.itemTypes + itemType }
 
     fun buildFragment() = build(context, builder)
 }
