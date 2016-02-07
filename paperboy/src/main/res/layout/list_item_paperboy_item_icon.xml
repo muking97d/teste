@@ -25,21 +25,21 @@
               android:clickable="true">
 
     <ImageView
-            android:id="@+id/type"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_done_black_24dp"
-            android:scaleType="center"
-            android:contentDescription="@string/paperboy_item_type_feature"/>
+        android:id="@+id/type"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="2dp"
+        android:src="@drawable/ic_done_black_24dp"
+        android:scaleType="center"
+        android:contentDescription="@string/paperboy_item_type_feature"/>
 
     <com.github.porokoro.paperboy.TouchDispatchingTextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/paperboy_item_title"/>
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/paperboy_item_title"/>
 
 </LinearLayout>

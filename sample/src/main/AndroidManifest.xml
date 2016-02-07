@@ -19,16 +19,16 @@
           package="com.github.porokoro.paperboy.sample">
 
     <application
-            android:allowBackup="true"
-            android:fullBackupContent="false"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme"
-            android:supportsRtl="true"
-            tools:ignore="UnusedAttribute">
+        android:allowBackup="true"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:supportsRtl="true"
+        tools:ignore="UnusedAttribute">
         <activity
-                android:name=".MainActivity"
-                android:label="@string/app_name">
+            android:name=".MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

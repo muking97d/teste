@@ -18,47 +18,47 @@
 >
 
     <com.github.porokoro.paperboy.sample.SummaryListPreference
-            android:key="pref_view_types"
-            android:title="@string/group_view_types"
-            android:dialogTitle="@string/group_view_types"
-            android:summary="@string/section_none"
-            android:entries="@array/pref_view_types_entries"
-            android:entryValues="@array/pref_view_types_values"
-            android:defaultValue="@string/pref_view_types_default"/>
+        android:key="pref_view_types"
+        android:title="@string/group_view_types"
+        android:dialogTitle="@string/group_view_types"
+        android:summary="@string/section_none"
+        android:entries="@array/pref_view_types_entries"
+        android:entryValues="@array/pref_view_types_values"
+        android:defaultValue="@string/pref_view_types_default"/>
 
     <SwitchPreferenceCompat
-            android:key="pref_custom_section"
-            android:title="@string/group_custom_section"/>
+        android:key="pref_custom_section"
+        android:title="@string/group_custom_section"/>
 
     <SwitchPreferenceCompat
-            android:key="pref_custom_type"
-            android:title="@string/group_custom_type"/>
+        android:key="pref_custom_type"
+        android:title="@string/group_custom_type"/>
 
     <SwitchPreferenceCompat
-            android:key="pref_custom_item"
-            android:title="@string/group_custom_item"/>
+        android:key="pref_custom_item"
+        android:title="@string/group_custom_item"/>
 
     <SwitchPreferenceCompat
-            android:key="pref_sorting"
-            android:title="@string/group_sorting"/>
+        android:key="pref_sorting"
+        android:title="@string/group_sorting"/>
 
     <PreferenceCategory
-            android:key="pref_java"
-            android:title="@string/group_java">
+        android:key="pref_java"
+        android:title="@string/group_java">
 
         <Preference
-                android:key="pref_java_default"
-                android:title="@string/section_java_default"/>
+            android:key="pref_java_default"
+            android:title="@string/section_java_default"/>
         <Preference
-                android:key="pref_java_custom"
-                android:title="@string/section_java_custom"/>
+            android:key="pref_java_custom"
+            android:title="@string/section_java_custom"/>
 
         <Preference
-                android:key="pref_java2_default"
-                android:title="@string/section_java2_default"/>
+            android:key="pref_java2_default"
+            android:title="@string/section_java2_default"/>
         <Preference
-                android:key="pref_java2_custom"
-                android:title="@string/section_java2_custom"/>
+            android:key="pref_java2_custom"
+            android:title="@string/section_java2_custom"/>
 
     </PreferenceCategory>
 

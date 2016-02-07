@@ -21,19 +21,19 @@
               android:clickable="true">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/item_custom_emoji"
-            android:textSize="24sp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/item_custom_emoji"
+        android:textSize="24sp"/>
 
     <com.github.porokoro.paperboy.TouchDispatchingTextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:text="@string/paperboy_item_title"
-            style="?android:attr/textAppearanceMedium"/>
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:text="@string/paperboy_item_title"
+        style="?android:attr/textAppearanceMedium"/>
 
 </LinearLayout>
