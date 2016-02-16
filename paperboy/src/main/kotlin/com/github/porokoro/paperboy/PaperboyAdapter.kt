@@ -38,7 +38,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
     }
 
     private val inflater = LayoutInflater.from(context)
-    private val dataset = arrayListOf<Element>()
+    private val dataset = mutableListOf<Element>()
     private val elementType = getElementType(config.viewType)
 
     fun setData(sections: List<PaperboySection>) {

@@ -40,7 +40,7 @@ internal class JsonDataReader(private val definitions: SparseArray<ItemType>) {
                 }
             } catch(e: IOException) {
                 e.printStackTrace()
-                arrayListOf()
+                mutableListOf()
             }
 
     private fun readSectionArray(reader: JsonReader) =
@@ -93,7 +93,7 @@ internal class JsonDataReader(private val definitions: SparseArray<ItemType>) {
     }
 
     private fun <T> JsonReader.readArray(read: (JsonReader) -> T): List<T> {
-        val array = arrayListOf<T>()
+        val array = mutableListOf<T>()
         beginArray()
 
         while (hasNext())
