@@ -16,16 +16,9 @@
 #   public *;
 #}
 
--dontwarn org.jetbrains.anko.ContextUtilsKt
-
 -repackageclasses 'com.github.porokoro.paperboy.sample'
 -renamesourcefileattribute SourceFile
--allowaccessmodification
 
 ### Android Support Library
 
 -dontnote android.support.**
-
-### Temporary for Kotlin 1.0.0-rc-1036
-
--dontwarn kotlin.**

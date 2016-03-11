@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         drawerToggle = ActionBarDrawerToggle(this, drawerLayout, find(R.id.toolbar),
                 R.string.navdrawer_open, R.string.navdrawer_close)
-        drawerLayout.setDrawerListener(drawerToggle)
+        drawerLayout.addDrawerListener(drawerToggle)
 
         if (savedInstanceState == null) {
             val fragment = buildPaperboy(this) {
