@@ -14,8 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.github.porokoro.paperboy.sample.SummaryListPreference
         android:key="pref_view_types"

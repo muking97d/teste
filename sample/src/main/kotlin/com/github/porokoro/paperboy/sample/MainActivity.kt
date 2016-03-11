@@ -18,11 +18,11 @@ package com.github.porokoro.paperboy.sample
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
-import android.widget.FrameLayout
 import com.github.porokoro.paperboy.ViewTypes
 import com.github.porokoro.paperboy.builders.buildItemType
 import com.github.porokoro.paperboy.builders.buildPaperboy
@@ -33,7 +33,7 @@ import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private var drawerLayout by Delegates.notNull<DrawerLayout>()
-    private var drawerNavigation by Delegates.notNull<FrameLayout>()
+    private var drawerNavigation by Delegates.notNull<NavigationView>()
     private var drawerToggle by Delegates.notNull<ActionBarDrawerToggle>()
 
     val listener = { it: Preference ->
