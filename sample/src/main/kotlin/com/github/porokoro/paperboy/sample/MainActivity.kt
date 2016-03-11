@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.preference.Preference
 import android.widget.FrameLayout
 import com.github.porokoro.paperboy.ViewTypes
 import com.github.porokoro.paperboy.builders.buildItemType
@@ -34,6 +35,20 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private var drawerLayout by Delegates.notNull<DrawerLayout>()
     private var drawerNavigation by Delegates.notNull<FrameLayout>()
     private var drawerToggle by Delegates.notNull<ActionBarDrawerToggle>()
+
+    val listener = { it: Preference ->
+        when (it.key) {
+            "pref_java_default" ->
+                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_DEFAULT)
+            "pref_java_custom" ->
+                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_CUSTOM)
+            "pref_java2_default" ->
+                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_DEFAULT)
+            "pref_java2_custom" ->
+                startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_CUSTOM)
+        }
+        true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,23 +78,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 )
             }
 
-            val settings = SettingsFragment() {
-                when (it.key) {
-                    "pref_java_default" ->
-                        startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_DEFAULT)
-                    "pref_java_custom" ->
-                        startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE1_CUSTOM)
-                    "pref_java2_default" ->
-                        startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_DEFAULT)
-                    "pref_java2_custom" ->
-                        startActivity<JavaSampleActivity>(JavaSampleActivity.ARG_SAMPLE to JavaSampleActivity.SAMPLE2_CUSTOM)
-                }
-                true
-            }
-
             supportFragmentManager.beginTransaction()
                     .add(R.id.content, fragment)
-                    .add(R.id.drawer_navigation, settings)
+                    .add(R.id.drawer_navigation, SettingsFragment())
                     .commit()
         }
 

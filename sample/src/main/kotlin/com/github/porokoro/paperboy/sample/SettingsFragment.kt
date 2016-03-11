@@ -16,13 +16,14 @@
 package com.github.porokoro.paperboy.sample
 
 import android.os.Bundle
-import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 
-class SettingsFragment(private val listener: (Preference) -> Boolean) : PreferenceFragmentCompat() {
+class SettingsFragment : PreferenceFragmentCompat() {
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.navdrawer)
 
+        val listener = (activity as MainActivity).listener
         preferenceScreen.findPreference("pref_java_default").setOnPreferenceClickListener(listener)
         preferenceScreen.findPreference("pref_java_custom").setOnPreferenceClickListener(listener)
         preferenceScreen.findPreference("pref_java2_default").setOnPreferenceClickListener(listener)
