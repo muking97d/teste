@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 R.layout.view_type_custom else 0
             itemLayout = if (sharedPreferences.getBoolean("pref_custom_item", false))
                 R.layout.view_item_custom else 0
-            sortItems = sharedPreferences.getBoolean("pref_sort", false)
+            sortItems = sharedPreferences.getBoolean("pref_sorting", false)
             itemTypes = listOf(
                     buildItemType(this@MainActivity, 1000, "Custom", "c") {
                         colorRes = R.color.item_type_custom
