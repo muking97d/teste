@@ -6,24 +6,24 @@ Paperboy
 
 A changelog library for Android
 
-[![Screenshot 1](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-1-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-1.png)
-[![Screenshot 2](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-2-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-2.png)
-[![Screenshot 3](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-3-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-3.png)
-[![Screenshot 4](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-4-thumbnail.png)](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-4.png)
+[<img src="https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-1-thumbnail.png" alt="Screenshot 1" width="216"/>](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-1.png)
+[<img src="https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-2-thumbnail.png" alt="Screenshot 2" width="216"/>](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-2.png)
+[<img src="https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-3-thumbnail.png" alt="Screenshot 3" width="216"/>](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-3.png)
+[<img src="https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-4-thumbnail.png" alt="Screenshot 4" width="216"/>](https://raw.githubusercontent.com/porokoro/paperboy/master/art/screenshot-4.png)
 
 Download
 --------
 
 Grab via Gradle:
 ```groovy
-compile 'com.github.porokoro.paperboy:paperboy:2.1.0'
+compile 'com.github.porokoro.paperboy:paperboy:3.0.0'
 ```
 or Maven:
 ```xml
 <dependency>
     <groupId>com.github.porokoro.paperboy</groupId>
     <artifactId>paperboy</artifactId>
-    <version>2.1.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -114,11 +114,17 @@ In addition you can define your own item types using the `ItemTypeBuilder` in
 combination with the `addItemType(ItemType)` method on `PaperboyBuilder`. You
 can even override the default ones.
 
+Migration
+---------
+
+Please see https://github.com/porokoro/paperboy/blob/develop/MIGRATION.md for
+migrating to version 3.0.0.
+
 License
 -------
 
 ```
-Copyright (C) 2015 porokoro
+Copyright (C) 2015-2016 Dominik Hibbeln
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

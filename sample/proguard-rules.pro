@@ -15,3 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-repackageclasses 'com.github.porokoro.paperboy.sample'
+-renamesourcefileattribute SourceFile
+
+### Android Support Library
+
+-dontnote android.support.**

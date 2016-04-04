@@ -15,7 +15,3 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-
-### Google Design Library 23.1.0 Bug
-
--keep class android.support.v7.widget.LinearLayoutManager { *; }
