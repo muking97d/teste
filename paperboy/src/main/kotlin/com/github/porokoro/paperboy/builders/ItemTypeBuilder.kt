@@ -59,6 +59,7 @@ class ItemTypeBuilder {
     var sortOrderRes = 0
 }
 
+@Suppress("unused")
 class ItemTypeChainBuilder(private val context: Context, private val id: Int, private val name: String,
                            private val shorthand: String) {
     constructor(context: Context, id: Int, @StringRes name: Int, @StringRes shorthand: Int)

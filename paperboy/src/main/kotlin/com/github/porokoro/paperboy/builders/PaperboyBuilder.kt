@@ -78,6 +78,7 @@ class PaperboyBuilder {
     var itemTypes = listOf<ItemType>()
 }
 
+@Suppress("unused")
 class PaperboyChainBuilder(private val context: Context) {
     private val builder = PaperboyBuilder()
 
