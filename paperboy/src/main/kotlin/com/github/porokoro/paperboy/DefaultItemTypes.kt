@@ -29,7 +29,7 @@ internal object DefaultItemTypes {
                 titleSingularRes = R.string.paperboy_item_type_feature
                 titlePluralRes = R.string.paperboy_item_type_features
                 colorRes = R.color.paperboy_item_type_feature
-                icon = R.drawable.ic_done_black_24dp
+                icon = R.drawable.paperboy_ic_done
                 sortOrder = 0
             }
 
@@ -38,7 +38,7 @@ internal object DefaultItemTypes {
                 titleSingularRes = R.string.paperboy_item_type_bug
                 titlePluralRes = R.string.paperboy_item_type_bugs
                 colorRes = R.color.paperboy_item_type_bug
-                icon = R.drawable.ic_bug_report_black_24dp
+                icon = R.drawable.paperboy_ic_bug_report
                 sortOrder = 1
             }
 
@@ -47,7 +47,7 @@ internal object DefaultItemTypes {
                 titleSingularRes = R.string.paperboy_item_type_improvement
                 titlePluralRes = R.string.paperboy_item_type_improvements
                 colorRes = R.color.paperboy_item_type_improvement
-                icon = R.drawable.ic_trending_up_black_24dp
+                icon = R.drawable.paperboy_ic_trending_up
                 sortOrder = 2
             }
 }
