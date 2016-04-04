@@ -1,5 +1,14 @@
 [
   {
+    "name": "3.0.0",
+    "items": [
+      {
+        "type": "F",
+        "title": "This library is now entirely written in Kotlin and the API changed a bit. But no new visible changes or features sorry :-(<br/><br/>See <a href=\"https://github.com/porokoro/paperboy/blob/develop/MIGRATION.md\">MIGRATION.md</a>."
+      }
+    ]
+  },
+  {
     "name": "2.1.0",
     "items": [
       {

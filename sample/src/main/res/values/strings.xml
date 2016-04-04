@@ -16,7 +16,7 @@
   -->
 <resources>
 
-    <string name="app_name">Paperboy Sample</string>
+    <string name="app_name">Paperboy 3.0.0 Sample</string>
     <string name="navdrawer_open">Open navigation</string>
     <string name="navdrawer_close">Close navigation</string>
 
