@@ -18,8 +18,10 @@ package com.github.porokoro.paperboy
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.text.Html
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
@@ -222,7 +224,7 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
     private var TextView.htmlText: CharSequence
         get() = text
         set(value) {
-            val spanned = Html.fromHtml(value.toString())
+            val spanned = fromHtmlCompat(value.toString())
             val spans = spanned?.getSpans(0, spanned.length, ClickableSpan::class.java)
 
             text = spanned
@@ -236,4 +238,11 @@ internal class PaperboyAdapter(context: Context, private val config: PaperboyCon
             } else
                 movementMethod = null
         }
+
+    private fun fromHtmlCompat(html: String): Spanned? =
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                @Suppress("DEPRECATION")
+                Html.fromHtml(html)
+            else
+                Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
 }
